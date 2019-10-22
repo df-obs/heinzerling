@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.parse.*;
 
-import java.util.Date;
 import java.util.List;
 
 public class Auftragdetails extends AppCompatActivity {
