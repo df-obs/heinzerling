@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Kalendar">
+
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/weekCalendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mcv_firstDayOfWeek="monday"
+            app:mcv_calendarMode="week"
+            app:mcv_selectionColor="#00F"
+            app:mcv_showOtherDates="all" />
+
+        <TextView
+            android:id="@+id/headlineAuftraege"
+            android:layout_width="match_parent"
+            android:layout_height="30pt"
+            android:gravity="center"
+            android:text="Aufträge"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/kalenderLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+
+</android.support.constraint.ConstraintLayout>

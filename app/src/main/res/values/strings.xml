@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Außendienst</string>
+    <string name="open_calendar">Open Calendar</string>
+    <string name="title_activity_auftragsanzeige">Auftragsanzeige</string>
+    <string name="title_navi">Navigation</string>
+    <string name="title_contacts">Ansprechpartner</string>
+    <string name="title_edit">Bearbeiten</string>
+    <string name="title_auftrag">Auftrag</string>
+    <string name="title_activity_auftragsbearbeitung">Auftragsbearbeitung</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="parse_server_url">https://usersold.kompetenzzentrum-siegen.digital/parse-old/</string>
+    <string name="parse_app_id">111234567890</string>
+    <string name="parse_client_key">RestAABBCCDDasdbnfquo!</string>
+</resources>

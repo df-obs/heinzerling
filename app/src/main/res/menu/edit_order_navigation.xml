@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/edit_order_nav_material"
+        android:icon="@drawable/ic_add_shopping_cart_grey_900_24dp"
+        android:title="Material" />
+
+    <item
+        android:id="@+id/edit_order_nav_mechanics"
+        android:icon="@drawable/ic_perm_identity_grey_900_24dp"
+        android:title="Monteure" />
+
+    <item
+        android:id="@+id/edit_order_nav_services"
+        android:icon="@drawable/ic_build_grey_900_24dp"
+        android:title="Arbeiten" />
+
+    <item
+        android:id="@+id/edit_order_nav_overview"
+        android:icon="@drawable/ic_send_grey_900_24dp"
+        android:title="Abschließen" />
+
+</menu>

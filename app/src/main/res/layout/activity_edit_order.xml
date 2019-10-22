@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditOrder">
+
+    <LinearLayout
+        android:id="@+id/edit_order_material_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="8pt"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/edit_order_material_headline"
+            android:layout_width="match_parent"
+            android:layout_height="24pt"
+            android:text="Material hinzufügen"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TableLayout
+            android:id="@+id/edit_order_material_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_order_material_table_row0">
+
+                <TextView
+                    android:id="@+id/edit_order_material_text_qty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=" Anz."
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/edit_order_material_text_article"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=" Artikel"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_order_material_table_row1" >
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="30pt"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Anz."
+                        android:id="@+id/edit_order_material_input_qty_0" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="130pt"
+                        android:layout_height="wrap_content"
+                        android:hint="Artikel"
+                        android:id="@+id/edit_order_material_input_art_0" />
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_order_material_table_row2" >
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="30pt"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Anz."
+                        android:id="@+id/edit_order_material_input_qty_1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="130pt"
+                        android:layout_height="wrap_content"
+                        android:hint="Artikel"
+                        android:id="@+id/edit_order_material_input_art_1" />
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_order_material_table_row3" >
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="30pt"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Anz."
+                        android:id="@+id/edit_order_material_input_qty_2" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="130pt"
+                        android:layout_height="wrap_content"
+                        android:hint="Artikel"
+                        android:id="@+id/edit_order_material_input_art_2" />
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_order_material_table_row4" >
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="30pt"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Anz."
+                        android:id="@+id/edit_order_material_input_qty_3" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="130pt"
+                        android:layout_height="wrap_content"
+                        android:hint="Artikel"
+                        android:id="@+id/edit_order_material_input_art_3" />
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_order_material_table_row5" >
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="30pt"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Anz."
+                        android:id="@+id/edit_order_material_input_qty_4" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="130pt"
+                        android:layout_height="wrap_content"
+                        android:hint="Artikel"
+                        android:id="@+id/edit_order_material_input_art_4" />
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_order_material_table_row6" >
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="30pt"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Anz."
+                        android:id="@+id/edit_order_material_input_qty_5" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="130pt"
+                        android:layout_height="wrap_content"
+                        android:hint="Artikel"
+                        android:id="@+id/edit_order_material_input_art_5" />
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_order_material_table_row7" >
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="30pt"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Anz."
+                        android:id="@+id/edit_order_material_input_qty_6" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="130pt"
+                        android:layout_height="wrap_content"
+                        android:hint="Artikel"
+                        android:id="@+id/edit_order_material_input_art_6" />
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_order_material_table_row8" >
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="30pt"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Anz."
+                        android:id="@+id/edit_order_material_input_qty_7" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="130pt"
+                        android:layout_height="wrap_content"
+                        android:hint="Artikel"
+                        android:id="@+id/edit_order_material_input_art_7" />
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+        </TableLayout>
+
+        <Button
+            android:id="@+id/edit_order_material_button_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Speichern" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/edit_order_mechanics_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="8pt"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/edit_order_mechanics_headline"
+            android:layout_width="match_parent"
+            android:layout_height="24pt"
+            android:text="Monteure hinzufügen"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_order_mechanics_table">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_order_mechanics_table_row_0">
+
+                <TextView
+                    android:id="@+id/edit_order_mechanics_text_qty"
+                    android:layout_width="30pt"
+                    android:layout_height="wrap_content"
+                    android:text=" Std."
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/edit_order_mechanics_text_name"
+                    android:layout_width="100pt"
+                    android:layout_height="wrap_content"
+                    android:text=" Name"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/edit_order_mechanics_text_cat"
+                    android:layout_width="30pt"
+                    android:layout_height="wrap_content"
+                    android:text=" Kat."
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_order_mechanics_table_row_1">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Std."
+                        android:id="@+id/edit_order_mechanics_input_qty_0" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Name"
+                        android:id="@+id/edit_order_mechanics_input_name_0" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Kat."
+                        android:id="@+id/edit_order_mechanics_input_cat_0" />
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_order_mechanics_table_row_2">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Std."
+                        android:id="@+id/edit_order_mechanics_input_qty_1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Name"
+                        android:id="@+id/edit_order_mechanics_input_name_1" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Kat."
+                        android:id="@+id/edit_order_mechanics_input_cat_1" />
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_order_mechanics_table_row_3">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Std."
+                        android:id="@+id/edit_order_mechanics_input_qty_2" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Name"
+                        android:id="@+id/edit_order_mechanics_input_name_2" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Kat."
+                        android:id="@+id/edit_order_mechanics_input_cat_2" />
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_order_mechanics_table_row_4">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Std."
+                        android:id="@+id/edit_order_mechanics_input_qty_3" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Name"
+                        android:id="@+id/edit_order_mechanics_input_name_3" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Kat."
+                        android:id="@+id/edit_order_mechanics_input_cat_3" />
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_order_mechanics_table_row_5">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Std."
+                        android:id="@+id/edit_order_mechanics_input_qty_4" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Name"
+                        android:id="@+id/edit_order_mechanics_input_name_4" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Kat."
+                        android:id="@+id/edit_order_mechanics_input_cat_4" />
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_order_mechanics_table_row_6">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Std."
+                        android:id="@+id/edit_order_mechanics_input_qty_5" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Name"
+                        android:id="@+id/edit_order_mechanics_input_name_5" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Kat."
+                        android:id="@+id/edit_order_mechanics_input_cat_5" />
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_order_mechanics_table_row_7">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Std."
+                        android:id="@+id/edit_order_mechanics_input_qty_6" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Name"
+                        android:id="@+id/edit_order_mechanics_input_name_6" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Kat."
+                        android:id="@+id/edit_order_mechanics_input_cat_6" />
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_order_mechanics_table_row_8">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Std."
+                        android:id="@+id/edit_order_mechanics_input_qty_7" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Name"
+                        android:id="@+id/edit_order_mechanics_input_name_7" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Kat."
+                        android:id="@+id/edit_order_mechanics_input_cat_7" />
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+        </TableLayout>
+        <Button
+            android:id="@+id/edit_order_mechanics_button_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Speichern" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/edit_order_services_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="8pt"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/edit_order_services_text_work"
+            android:layout_width="match_parent"
+            android:layout_height="24pt"
+            android:text="Ausgeführte Arbeiten"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edit_order_services_input_work"
+            android:layout_width="match_parent"
+            android:layout_height="90pt"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Tragen Sie hier die ausgeführten Arbeiten ein."
+            android:inputType="textMultiLine" />
+
+        <TextView
+            android:id="@+id/edit_order_services_text_remarks"
+            android:layout_width="match_parent"
+            android:layout_height="24pt"
+            android:text="Bemerkungen"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10pt" />
+
+        <EditText
+            android:id="@+id/edit_order_services_input_remarks"
+            android:layout_width="match_parent"
+            android:layout_height="90pt"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Falls notwendig, nutzen Sie dieses Feld für Bemerkungen."
+            android:inputType="textMultiLine" />
+
+        <CheckBox
+            android:id="@+id/edit_order_services_input_finished"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10pt"
+            android:text="Arbeiten abgeschlossen?"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/edit_order_services_button_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Speichern" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/edit_order_overview_layout"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:padding="8pt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/edit_order_overview_logo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/heinzerling" />
+
+            <TextView
+                android:id="@+id/edit_order_overview_headline"
+                android:layout_width="match_parent"
+                android:layout_height="24pt"
+                android:layout_marginTop="2pt"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/edit_order_overview_text_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_order_overview_table_material">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/edit_order_overview_text_pos_material"
+                        android:layout_width="18pt"
+                        android:layout_height="wrap_content"
+                        android:text="Pos"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/edit_order_overview_text_qty_material"
+                        android:layout_width="28pt"
+                        android:layout_height="wrap_content"
+                        android:text="Menge"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/edit_order_overview_text_unit_material"
+                        android:layout_width="28pt"
+                        android:layout_height="wrap_content"
+                        android:text="Einheit"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/edit_order_overview_text_name_material"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Beschreibung"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </TableRow>
+            </TableLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5pt"
+                android:visibility="gone"
+                android:id="@+id/edit_order_overview_table_mechanics">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/edit_order_overview_text_pos_mechanics"
+                        android:layout_width="18pt"
+                        android:layout_height="wrap_content"
+                        android:text="Pos"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/edit_order_overview_text_qty_mechanics"
+                        android:layout_width="35pt"
+                        android:layout_height="wrap_content"
+                        android:text="Dauer"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/edit_order_overview_text_name_mechanics"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Monteur"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/edit_order_overview_text_lastmaintenance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/edit_order_overview_text_work"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/edit_order_overview_text_remarks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/edit_order_navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/edit_order_navigation" />
+
+</android.support.constraint.ConstraintLayout>
