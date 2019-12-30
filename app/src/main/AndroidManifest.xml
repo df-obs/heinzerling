@@ -14,13 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".ParseApplication">
-        <activity
-            android:name=".EditOrder">
-        </activity>
-        <activity
-            android:name=".Auftragsanzeige">
-        </activity>
-        <activity android:name=".Auftragdetails" />
+        <activity android:name=".EditOrder" />
+        <activity android:name=".Auftragsanzeige" />
+        <activity android:name=".OrderDetails" />
         <activity android:name=".Kalendar" />
         <activity android:name=".MainActivity">
             <intent-filter>

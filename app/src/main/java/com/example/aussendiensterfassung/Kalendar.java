@@ -110,8 +110,8 @@ public class Kalendar extends AppCompatActivity {
     }
 
     public void openAuftragDetails(View view, String auftrag) {
-        Intent startAuftragDetailsActivity = new Intent(this, Auftragdetails.class);
-        startAuftragDetailsActivity.putExtra("auftrag", auftrag);
+        Intent startAuftragDetailsActivity = new Intent(this, OrderDetails.class);
+        startAuftragDetailsActivity.putExtra("orderObjectId", auftrag);
         startActivity(startAuftragDetailsActivity);
     }
 }
