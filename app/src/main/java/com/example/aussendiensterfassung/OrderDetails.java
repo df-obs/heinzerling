@@ -45,15 +45,15 @@ public class OrderDetails extends AppCompatActivity {
                     for (int i=0; i<resultList.size(); i++) {
                         ParseObject orderElevator = resultList.get(i);
 
-                        String valueElevatorId        = Objects.requireNonNull(orderElevator.getParseObject("Aufzug")).getString("Nummer");
-                        String valueOrderId           = orderElevator.getString("Nummer");
+                        String valueElevatorId        = String.valueOf(Objects.requireNonNull(orderElevator.getParseObject("Aufzug")).getInt("Nummer"));
+                        String valueOrderId           = String.valueOf(orderElevator.getInt("Nummer"));
                         final String elevatorObjectId = orderElevator.getObjectId();
 
                         Button buttonElevator = new Button(getApplicationContext());
 
                         buttonElevator.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 2));
                         buttonElevator.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-                        buttonElevator.setText(String.format("%s: %s\n%s: %s", R.string.elevator_id, valueElevatorId, R.string.order_id, valueOrderId));
+                        buttonElevator.setText(String.format("%s: %s\n%s: %s", getString(R.string.elevator_id), valueElevatorId, getString(R.string.order_id), valueOrderId));
 
                         buttonElevator.setOnClickListener(new View.OnClickListener() {
                             @Override

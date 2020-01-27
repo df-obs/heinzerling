@@ -3,7 +3,6 @@ package com.example.aussendiensterfassung;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -11,13 +10,11 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -31,6 +28,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import static android.view.View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION;
 
@@ -170,7 +168,7 @@ public class EditOrder extends AppCompatActivity {
 
                         // Define field contents
                         Double valueQuantity    = oldPosition.getDouble("Anzahl");
-                        String valueArticle     = oldPosition.getParseObject("Artikel").getString("Name");
+                        String valueArticle     = Objects.requireNonNull(oldPosition.getParseObject("Artikel")).getString("Name");
 
                         // Set field contents
                         DecimalFormat f = new DecimalFormat("0.00");
@@ -220,7 +218,7 @@ public class EditOrder extends AppCompatActivity {
             // Check if field is empty or quantity is 0 or quantity is not a number
             boolean entryOk = false;
 
-            if (valueStrQuantity == "" || !valueStrQuantity.matches("-?\\d+(\\.\\d+)?") || valueArticle.matches("")) {
+            if (Objects.equals(valueStrQuantity, "") || !valueStrQuantity.matches("-?\\d+(\\.\\d+)?") || valueArticle.matches("")) {
                 Log.d("AttachArticleCheck", "Info: Entry in line " + i + " is not correct, will not save article.");
             } else {
                 if (Double.valueOf(valueStrQuantity) > 0) {
@@ -308,7 +306,7 @@ public class EditOrder extends AppCompatActivity {
 
                         // Define field contents
                         Double valueQuantity = oldPosition.getDouble("Stunden");
-                        String valueName     = oldPosition.getParseObject("Monteur").getString("Name");
+                        String valueName     = Objects.requireNonNull(oldPosition.getParseObject("Monteur")).getString("Name");
                         Double valueCategory = oldPosition.getDouble("Kategorie");
 
                         // Set field contents
@@ -365,7 +363,7 @@ public class EditOrder extends AppCompatActivity {
             // Check if field is empty or quantity is 0 or quantity is not a number
             boolean entryOk = false;
 
-            if (valueStrQuantity == "" || !valueStrQuantity.matches("-?\\d+(\\.\\d+)?") || !valueStrCategory.matches("-?\\d+(\\.\\d+)?") || valueName.matches("")) {
+            if (Objects.equals(valueStrQuantity, "") || !valueStrQuantity.matches("-?\\d+(\\.\\d+)?") || !valueStrCategory.matches("-?\\d+(\\.\\d+)?") || valueName.matches("")) {
                 Log.d("AttachMechanicsCheck", "Info: Entry in line " + i + " is not correct, will not save mechanic.");
             } else {
                 if (Double.valueOf(valueStrQuantity) > 0) {
@@ -428,7 +426,7 @@ public class EditOrder extends AppCompatActivity {
                     // Define field contents
                     String valueWork      = orderObject.getString("Arbeiten");
                     String valueRemarks   = orderObject.getString("Bemerkungen");
-                    Boolean valueFinished = orderObject.getBoolean("Abgeschlossen");
+                    boolean valueFinished = orderObject.getBoolean("Abgeschlossen");
 
                     // Set field contents
                     fieldWork.setText(valueWork);
@@ -452,7 +450,7 @@ public class EditOrder extends AppCompatActivity {
         final String valueRemarks   = fieldRemarks.getText().toString();
         final Boolean valueFinished = fieldFinished.isChecked();
 
-        // Save user intputs to database
+        // Save user inputs to database
         ParseQuery queryOrder = ParseQuery.getQuery("Einzelauftrag");
         queryOrder.whereEqualTo("objectId", orderObjectId);
         queryOrder.findInBackground(new FindCallback<ParseObject>() {

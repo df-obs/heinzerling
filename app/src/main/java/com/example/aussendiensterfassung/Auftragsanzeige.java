@@ -76,7 +76,7 @@ public class Auftragsanzeige extends AppCompatActivity {
         setContentView(R.layout.activity_auftragsanzeige);
 
         Intent intent = getIntent();
-        auftragsnummer = intent.getStringExtra("auftrag");
+        auftragsnummer = intent.getStringExtra("orderObjectId");
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Einzelauftrag");
         query.whereEqualTo("objectId", auftragsnummer);
