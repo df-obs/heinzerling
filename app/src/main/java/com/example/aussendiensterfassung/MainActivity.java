@@ -20,4 +20,9 @@ public class MainActivity extends AppCompatActivity {
         Intent startCalendarActivity = new Intent(this, Kalendar.class);
         startActivity(startCalendarActivity);
     }
+
+    public void openLockedOrders(View view) {
+        Intent startLockedOrdersActivity = new Intent(this, LockedOrders.class);
+        startActivity(startLockedOrdersActivity);
+    }
 }

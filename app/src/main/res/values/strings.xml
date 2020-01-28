@@ -15,5 +15,26 @@
     <string name="order_id">Auftragsnummer</string>
     <string name="elevator_id">Aufzugsnummer</string>
     <string name="signature_customer">Unterschrift Kunde</string>
+    <string name="signature_employee">Unterschrift Monteur</string>
     <string name="sign_all">Alle Aufträge signieren</string>
+    <string name="locked_orders">Abgeschlossene Aufträge</string>
+    <string name="company_name">Heinzerling Aufzüge</string>
+    <string name="position_short">Pos</string>
+    <string name="hour_short">Std.</string>
+    <string name="quantity">Menge</string>
+    <string name="unit">Einheit</string>
+    <string name="description">Beschreibung</string>
+    <string name="duration">Dauer</string>
+    <string name="mechanic">Monteur</string>
+    <string name="sign">Signieren</string>
+    <string name="order_number">Auftrag Nummer</string>
+    <string name="date">Datum</string>
+    <string name="location">Standort</string>
+    <string name="key_safe">Schlüsseldepot</string>
+    <string name="last_maintenance">Letzte Wartung</string>
+    <string name="performed_work">Ausgeführte Arbeiten</string>
+    <string name="remarks">Bemerkungen</string>
+    <string name="close">Schließen</string>
+    <string name="error_signature">Fehler beim Laden der Unterschrift.</string>
+    <string name="signed_at">Signiert am</string>
 </resources>

@@ -103,5 +103,12 @@ public class SignOrder extends AppCompatActivity {
                 }
             }
         });
+
+        // Switch to locked order view
+        Intent switchToLockedOrders = new Intent(getApplicationContext(), LockedOrders.class);
+        if (orderObjectIds.length==1) {
+            switchToLockedOrders.putExtra("orderObjectId", orderObjectIds[0]);
+        }
+        startActivity(switchToLockedOrders);
     }
 }

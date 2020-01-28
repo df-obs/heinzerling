@@ -57,20 +57,35 @@ public class OrderDetails extends AppCompatActivity {
                         String valueOrderId           = String.valueOf(orderElevator.getInt("Nummer"));
                         final String elevatorObjectId = orderElevator.getObjectId();
 
+                        boolean orderLocked = orderElevator.getBoolean("Gesperrt");
+
                         Button buttonElevator = new Button(getApplicationContext());
 
                         buttonElevator.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 2));
                         buttonElevator.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                         buttonElevator.setText(String.format("%s: %s\n%s: %s", getString(R.string.elevator_id), valueElevatorId, getString(R.string.order_id), valueOrderId));
 
-                        buttonElevator.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent switchToShowOrder = new Intent(getApplicationContext(), Auftragsanzeige.class);
-                                switchToShowOrder.putExtra("orderObjectId", elevatorObjectId);
-                                startActivity(switchToShowOrder);
-                            }
-                        });
+
+                        if (orderLocked) {
+                            buttonElevator.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // Order already locked / signed >> Switch to locked order view
+                                    Intent switchToLockedOrders = new Intent(getApplicationContext(), LockedOrders.class);
+                                    switchToLockedOrders.putExtra("orderObjectId", elevatorObjectId);
+                                    startActivity(switchToLockedOrders);
+                                }
+                            });
+                        } else {
+                            buttonElevator.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent switchToShowOrder = new Intent(getApplicationContext(), Auftragsanzeige.class);
+                                    switchToShowOrder.putExtra("orderObjectId", elevatorObjectId);
+                                    startActivity(switchToShowOrder);
+                                }
+                            });
+                        }
 
                         if (i%2 == 0) {
                             buttonElevator.setBackgroundColor(0xFF80D8FF);

@@ -24,6 +24,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -506,8 +507,8 @@ public class EditOrder extends AppCompatActivity {
                         // Get field contents out of the database
                         int pos = i + 1;
                         double quantity = materialPosition.getDouble("Anzahl");
-                        String unit = materialPosition.getParseObject("Artikel").getString("Einheit");
-                        String name = materialPosition.getParseObject("Artikel").getString("Name");
+                        String unit = Objects.requireNonNull(materialPosition.getParseObject("Artikel")).getString("Einheit");
+                        String name = Objects.requireNonNull(materialPosition.getParseObject("Artikel")).getString("Name");
 
                         // Create new table row
                         TableRow row = new TableRow(getApplicationContext());
@@ -516,7 +517,7 @@ public class EditOrder extends AppCompatActivity {
 
                         // Print position
                         TextView textPosition = new TextView(getApplicationContext());
-                        textPosition.setText(Integer.toString(pos));
+                        textPosition.setText(String.valueOf(pos));
                         textPosition.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
                         row.addView(textPosition);
 
@@ -572,7 +573,7 @@ public class EditOrder extends AppCompatActivity {
                         // Get field contents out of the database
                         int pos = i + 1;
                         double quantity = mechanicPosition.getDouble("Stunden");
-                        String name = mechanicPosition.getParseObject("Monteur").getString("Name");
+                        String name = Objects.requireNonNull(mechanicPosition.getParseObject("Monteur")).getString("Name");
 
                         // Create new table row
                         TableRow row = new TableRow(getApplicationContext());
@@ -581,14 +582,14 @@ public class EditOrder extends AppCompatActivity {
 
                         // Print position
                         TextView textPosition = new TextView(getApplicationContext());
-                        textPosition.setText(Integer.toString(pos));
+                        textPosition.setText(String.valueOf(pos));
                         textPosition.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
                         row.addView(textPosition);
 
                         // Print quantity
                         TextView textQuantity = new TextView(getApplicationContext());
                         DecimalFormat f = new DecimalFormat("0.00");
-                        textQuantity.setText(f.format(quantity) + " Std.");
+                        textQuantity.setText(String.format ("%s %s", f.format(quantity), getString(R.string.hour_short)));
                         textQuantity.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
                         row.addView(textQuantity);
 
@@ -620,49 +621,58 @@ public class EditOrder extends AppCompatActivity {
             public void done(List<ParseObject> resultList, ParseException e) {
                 if (e == null) {
                     ParseObject finalOrder = resultList.get(0);
+                    DateFormat dateFormat = DateFormat.getDateInstance();
 
                     // Get and parse database contents
                     int valueOrderId = finalOrder.getInt("Nummer");
-                    Date valueDate = finalOrder.getParseObject("Gesamtauftrag").getDate("Datum");
-                    String valueStrDate = valueDate.getDate() + "." + (valueDate.getMonth()+1) + "." + (valueDate.getYear()+1900);
-                    String valueCustomer = finalOrder.getParseObject("Aufzug").getParseObject("Kunde").getString("Name");
-                    String valueCustomerStreet = finalOrder.getParseObject("Aufzug").getParseObject("Kunde").getString("Strasse");
-                    String valueCustomerCity = finalOrder.getParseObject("Aufzug").getParseObject("Kunde").getInt("PLZ") + " " + finalOrder.getParseObject("Aufzug").getParseObject("Kunde").getString("Ort");
-                    String valueElevatorId = Integer.toString(finalOrder.getParseObject("Aufzug").getInt("Nummer"));
-                    String valueElevatorStreet = finalOrder.getParseObject("Aufzug").getString("Strasse");
-                    String valueElevatorCity = finalOrder.getParseObject("Aufzug").getInt("PLZ") + " " + finalOrder.getParseObject("Aufzug").getString("Ort");
-                    String valueKeySafe = finalOrder.getParseObject("Aufzug").getString("Schluesseldepot");
-                    Date valueLastMaintenance = finalOrder.getParseObject("Aufzug").getDate("LetzteWartung");
-                    String valueStrLastMaintenance = valueLastMaintenance.getDate() + "." + (valueLastMaintenance.getMonth()+1) + "." + (valueLastMaintenance.getYear()+1900);
+                    Date valueDate = Objects.requireNonNull(finalOrder.getParseObject("Gesamtauftrag")).getDate("Datum");
+                    String valueStrDate = dateFormat.format(valueDate);
+                    String valueCustomer = Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("Name");
+                    String valueCustomerStreet = Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("Strasse");
+                    String valueCustomerCity = Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getInt("PLZ") + " " + Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("Ort");
+                    String valueElevatorId = Integer.toString(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getInt("Nummer"));
+                    String valueElevatorStreet = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Strasse");
+                    String valueElevatorCity = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getInt("PLZ") + " " + Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Ort");
+                    String valueKeySafe = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Schluesseldepot");
+                    Date valueLastMaintenance = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getDate("LetzteWartung");
+                    String valueStrLastMaintenance = dateFormat.format(valueLastMaintenance);
                     String valueWork = finalOrder.getString("Arbeiten");
                     String valueRemarks = finalOrder.getString("Bemerkungen");
 
                     // Print headline
                     TextView textHeadline = findViewById(R.id.edit_order_overview_headline);
-                    textHeadline.setText("Auftrag Nummer " + valueOrderId);
+                    textHeadline.setText(String.format("%s: %s", getString(R.string.order_number), valueOrderId));
 
                     // Print order data
                     TextView viewData = findViewById(R.id.edit_order_overview_text_data);
-                    viewData.setText("Datum: "+ valueStrDate + "\n\n" + valueCustomer + "\n" + valueCustomerStreet + "\n" + valueCustomerCity + "\n\nAufzugnummer: "+ valueElevatorId + "\n\n" + "Standort:\n" + valueElevatorStreet + "\n" + valueElevatorCity + "\n\nSchlüsseldepot: " + valueKeySafe + "\n");
+                    viewData.setText(String.format("%s: %s\n\n%s\n%s\n%s\n\n%s: %s\n\n%s:\n%s\n%s\n\n%s: %s\n", getString(R.string.date), valueStrDate, valueCustomer, valueCustomerStreet, valueCustomerCity, getString(R.string.elevator_id), valueElevatorId, getString(R.string.location), valueElevatorStreet, valueElevatorCity, getString(R.string.key_safe), valueKeySafe));
 
                     // Print data of last maintenance
                     TextView viewLastMaintenance = findViewById(R.id.edit_order_overview_text_lastmaintenance);
-                    viewLastMaintenance.setText("\nLetzte Wartung: " + valueStrLastMaintenance);
+                    viewLastMaintenance.setText(String.format("\n%s: %s", getString(R.string.last_maintenance), valueStrLastMaintenance));
 
                     // Print work
                     TextView viewWork = findViewById(R.id.edit_order_overview_text_work);
-                    if (!valueWork.matches("")) {
-                        viewWork.setVisibility(View.VISIBLE);
-                        viewWork.setText("\nAusgeführte Arbeiten: " + valueWork);
+                    if (valueWork != null) {
+                        if (!valueWork.matches("")) {
+                            viewWork.setVisibility(View.VISIBLE);
+                            viewWork.setText(String.format("\n%s: %s", getString(R.string.performed_work), valueWork));
+                        } else {
+                            viewWork.setVisibility(View.GONE);
+                        }
                     } else {
                         viewWork.setVisibility(View.GONE);
                     }
 
                     // Print remarks
                     TextView viewRemarks = findViewById(R.id.edit_order_overview_text_remarks);
-                    if (!valueRemarks.matches("")) {
-                        viewRemarks.setVisibility(View.VISIBLE);
-                        viewRemarks.setText("\nBemerkungen: " + valueRemarks + "\n");
+                    if (valueRemarks != null) {
+                        if (!valueRemarks.matches("")) {
+                            viewRemarks.setVisibility(View.VISIBLE);
+                            viewRemarks.setText(String.format("\n%s: %s\n", getString(R.string.remarks), valueRemarks));
+                        } else {
+                            viewRemarks.setVisibility(View.GONE);
+                        }
                     } else {
                         viewRemarks.setVisibility(View.GONE);
                     }

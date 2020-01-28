@@ -13,7 +13,7 @@
         android:gravity="center"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:text="Unterschrift Monteur"
+        android:text="@string/signature_employee"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
