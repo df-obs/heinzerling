@@ -1,6 +1,8 @@
 package com.example.aussendiensterfassung;
 
 import android.app.Application;
+import android.util.Log;
+
 import com.parse.*;
 
 import java.util.List;
@@ -25,8 +27,8 @@ public class ParseApplication extends Application {
 
         String[] tables = {"Ansprechpartner", "Artikel", "ArtikelAuftrag", "Auftrag", "Aufzug", "Einzelauftrag", "Kunde", "Monteur", "MonteurAuftrag"};
 
-        for (int i=0; i<tables.length; i++) {
-            pinData(tables[i]);
+        for (String table : tables) {
+            pinData(table);
         }
     }
 
@@ -41,7 +43,7 @@ public class ParseApplication extends Application {
                         ex.printStackTrace();
                     }
                 } else {
-                    // error
+                    Log.e("Pin Data", "Error: " + e.getMessage());
                 }
             }
         });
