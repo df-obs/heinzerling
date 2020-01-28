@@ -17,10 +17,16 @@ import java.util.Objects;
 
 public class OrderDetails extends AppCompatActivity {
 
+    // List of all orders / elevators that are related to the main order
+    protected String elevatorObjectIds;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_details);
+
+        // Define layout
+        final LinearLayout layoutElevators = findViewById(R.id.order_details_elevators_layout);
 
         // Catch OrderID and define OrderID and order ParseObject
         Intent intent = getIntent();
@@ -36,12 +42,14 @@ public class OrderDetails extends AppCompatActivity {
         orderQuery.whereEqualTo("objectId", orderObjectId);
         orderQuery.include("Kunde");
 
+        // Get all orders that are related to the main order
         elevatorQuery.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
                 if (e == null) {
-                    LinearLayout layoutElevators = findViewById(R.id.order_details_elevators_layout);
+                    // Clear view
                     layoutElevators.removeAllViewsInLayout();
 
+                    // Create a button for every "single order" / elevator
                     for (int i=0; i<resultList.size(); i++) {
                         ParseObject orderElevator = resultList.get(i);
 
@@ -51,7 +59,7 @@ public class OrderDetails extends AppCompatActivity {
 
                         Button buttonElevator = new Button(getApplicationContext());
 
-                        buttonElevator.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 2));
+                        buttonElevator.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 2));
                         buttonElevator.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                         buttonElevator.setText(String.format("%s: %s\n%s: %s", getString(R.string.elevator_id), valueElevatorId, getString(R.string.order_id), valueOrderId));
 
@@ -70,13 +78,38 @@ public class OrderDetails extends AppCompatActivity {
                             buttonElevator.setBackgroundColor(0xFF82B1FF);
 
                         layoutElevators.addView(buttonElevator);
+
+                        // Add elevator to the list
+                        if (i==0) {
+                            elevatorObjectIds = elevatorObjectId;
+                        } else {
+                            elevatorObjectIds += "," + elevatorObjectId;
+                        }
                     }
+
+                    // Create button to sign all orders
+                    Button buttonSign = new Button(getApplicationContext());
+
+                    buttonSign.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+                    buttonSign.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+                    buttonSign.setText(String.format(getString(R.string.sign_all)));
+                    buttonSign.setBackgroundColor(0xFF9C27B0);
+                    buttonSign.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent switchToSignOrder = new Intent(getApplicationContext(), SignOrder.class);
+                            switchToSignOrder.putExtra("orderObjectId", elevatorObjectIds);
+                            startActivity(switchToSignOrder);
+                        }
+                    });
+                    layoutElevators.addView(buttonSign);
                 } else {
                     Log.d("Order Details", "Error: " + e.getMessage());
                 }
             }
         });
 
+        // Set headline
         orderQuery.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
                 if (e == null) {

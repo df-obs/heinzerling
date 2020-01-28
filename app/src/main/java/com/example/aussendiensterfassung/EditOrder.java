@@ -75,9 +75,6 @@ public class EditOrder extends AppCompatActivity {
                     layoutMechanics.setVisibility(View.GONE);
                     layoutServices.setVisibility(View.GONE);
                     layoutOverview.setVisibility(View.VISIBLE);
-                    saveMaterial();
-                    saveMechanics();
-                    saveServices();
                     getOverview();
                     return true;
             }
@@ -139,7 +136,17 @@ public class EditOrder extends AppCompatActivity {
             }
         });
 
-        // Fill user input fields with exisiting data
+        Button buttonSignOrder = findViewById(R.id.edit_order_overview_button_sign);
+        buttonSignOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent switchToSignOrder = new Intent(getApplicationContext(), SignOrder.class);
+                switchToSignOrder.putExtra("orderObjectId", orderObjectId);
+                startActivity(switchToSignOrder);
+            }
+        });
+
+        // Fill user input fields with existing data
         getMaterial();
     }
 
@@ -238,7 +245,8 @@ public class EditOrder extends AppCompatActivity {
                 query.findInBackground(new FindCallback<ParseObject>() {
                     public void done(List<ParseObject> resultList, ParseException e) {
                         if (e == null) {
-                            if (resultList.size() == 0) { // Article does not exist yet, create it
+                            // Article does not exist yet, create it
+                            if (resultList.size() == 0) {
                                 ParseObject newArticle = new ParseObject("Artikel");
                                 newArticle.put("Name", valueArticle);
                                 newArticle.put("Einheit", "stk");
@@ -629,7 +637,6 @@ public class EditOrder extends AppCompatActivity {
                     String valueWork = finalOrder.getString("Arbeiten");
                     String valueRemarks = finalOrder.getString("Bemerkungen");
 
-
                     // Print headline
                     TextView textHeadline = findViewById(R.id.edit_order_overview_headline);
                     textHeadline.setText("Auftrag Nummer " + valueOrderId);
@@ -655,7 +662,7 @@ public class EditOrder extends AppCompatActivity {
                     TextView viewRemarks = findViewById(R.id.edit_order_overview_text_remarks);
                     if (!valueRemarks.matches("")) {
                         viewRemarks.setVisibility(View.VISIBLE);
-                        viewRemarks.setText("\nBemerkungen: " + valueRemarks + "\n\n\n");
+                        viewRemarks.setText("\nBemerkungen: " + valueRemarks + "\n");
                     } else {
                         viewRemarks.setVisibility(View.GONE);
                     }
@@ -665,7 +672,7 @@ public class EditOrder extends AppCompatActivity {
             }
         });
 
-        // Get positions (material + mechanics)
+        // Get positions (mechanics + material)
         getPositions();
     }
 }

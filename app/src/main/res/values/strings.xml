@@ -1,12 +1,10 @@
 <resources>
     <string name="app_name">Außendienst</string>
     <string name="open_calendar">Open Calendar</string>
-    <string name="title_activity_auftragsanzeige">Auftragsanzeige</string>
     <string name="title_navi">Navigation</string>
     <string name="title_contacts">Ansprechpartner</string>
     <string name="title_edit">Bearbeiten</string>
     <string name="title_auftrag">Auftrag</string>
-    <string name="title_activity_auftragsbearbeitung">Auftragsbearbeitung</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -16,4 +14,6 @@
     <string name="au_endiensterfassung_nhauptmen">Außendiensterfassung Hauptmenü</string>
     <string name="order_id">Auftragsnummer</string>
     <string name="elevator_id">Aufzugsnummer</string>
+    <string name="signature_customer">Unterschrift Kunde</string>
+    <string name="sign_all">Alle Aufträge signieren</string>
 </resources>
