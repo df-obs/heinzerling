@@ -16,7 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <com.prolificinteractive.materialcalendarview.MaterialCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
             android:id="@+id/weekCalendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="30pt"
             android:gravity="center"
-            android:text="Aufträge"
+            android:text="@string/orders"
             android:textSize="24sp"
             android:textStyle="bold" />
 

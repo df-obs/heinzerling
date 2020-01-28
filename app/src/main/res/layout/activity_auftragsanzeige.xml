@@ -32,6 +32,7 @@
             android:id="@+id/heinzerlingLogo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/company_name"
             app:srcCompat="@drawable/heinzerling" />
 
         <TextView
@@ -61,7 +62,7 @@
                     android:id="@+id/tablePos"
                     android:layout_width="18pt"
                     android:layout_height="wrap_content"
-                    android:text="Pos"
+                    android:text="@string/position_short"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -69,7 +70,7 @@
                     android:id="@+id/tableMenge"
                     android:layout_width="28pt"
                     android:layout_height="wrap_content"
-                    android:text="Menge"
+                    android:text="@string/quantity"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -77,7 +78,7 @@
                     android:id="@+id/tableEinheit"
                     android:layout_width="28pt"
                     android:layout_height="wrap_content"
-                    android:text="Einheit"
+                    android:text="@string/unit"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -85,7 +86,7 @@
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Beschreibung"
+                    android:text="@string/description"
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </TableRow>

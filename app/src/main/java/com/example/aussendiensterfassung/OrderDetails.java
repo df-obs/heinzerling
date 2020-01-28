@@ -33,12 +33,15 @@ public class OrderDetails extends AppCompatActivity {
         String orderObjectId = intent.getStringExtra("orderObjectId");
 
         ParseQuery<ParseObject> innerQuery = ParseQuery.getQuery("Auftrag");
+        innerQuery.fromLocalDatastore();
         innerQuery.whereEqualTo("objectId", orderObjectId);
         ParseQuery<ParseObject> elevatorQuery = ParseQuery.getQuery("Einzelauftrag");
+        elevatorQuery.fromLocalDatastore();
         elevatorQuery.whereMatchesQuery("Gesamtauftrag", innerQuery);
         elevatorQuery.include("Aufzug");
 
         ParseQuery<ParseObject> orderQuery = ParseQuery.getQuery("Auftrag");
+        orderQuery.fromLocalDatastore();
         orderQuery.whereEqualTo("objectId", orderObjectId);
         orderQuery.include("Kunde");
 
@@ -98,7 +101,7 @@ public class OrderDetails extends AppCompatActivity {
                         if (i==0) {
                             elevatorObjectIds = elevatorObjectId;
                         } else {
-                            elevatorObjectIds += "," + elevatorObjectId;
+                            elevatorObjectIds = elevatorObjectIds.concat(",").concat(elevatorObjectId);
                         }
                     }
 
@@ -107,7 +110,7 @@ public class OrderDetails extends AppCompatActivity {
 
                     buttonSign.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
                     buttonSign.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-                    buttonSign.setText(String.format(getString(R.string.sign_all)));
+                    buttonSign.setText(getString(R.string.sign_all));
                     buttonSign.setBackgroundColor(0xFF9C27B0);
                     buttonSign.setOnClickListener(new View.OnClickListener() {
                         @Override

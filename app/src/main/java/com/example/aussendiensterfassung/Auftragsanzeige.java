@@ -32,7 +32,6 @@ public class Auftragsanzeige extends AppCompatActivity {
 
     LinearLayout layoutAuftragAnzeige;
     LinearLayout layoutAnsprechpartnerAnzeige;
-    ImageButton callButton;
     BottomNavigationView navView;
     String objectAdress;
     String auftragsnummer;
@@ -79,6 +78,7 @@ public class Auftragsanzeige extends AppCompatActivity {
         auftragsnummer = intent.getStringExtra("orderObjectId");
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Einzelauftrag");
+        query.fromLocalDatastore();
         query.whereEqualTo("objectId", auftragsnummer);
         query.include("Aufzug");
         query.include("Aufzug.Kunde");
@@ -105,8 +105,10 @@ public class Auftragsanzeige extends AppCompatActivity {
 
     protected void rufeArtikelAb() {
         ParseQuery<ParseObject> innerQuery = ParseQuery.getQuery("Einzelauftrag");
+        innerQuery.fromLocalDatastore();
         innerQuery.whereEqualTo("objectId", auftragsnummer);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ArtikelAuftrag");
+        query.fromLocalDatastore();
         query.whereMatchesQuery("Auftrag", innerQuery);
         query.whereEqualTo("Vorgegeben", true);
         query.include("Artikel");
@@ -163,6 +165,7 @@ public class Auftragsanzeige extends AppCompatActivity {
 
     protected void rufeAnsprechpartnerAb() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Ansprechpartner");
+        query.fromLocalDatastore();
         query.whereEqualTo("Kunde", kundeObj);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> ansprechpartner, ParseException e) {

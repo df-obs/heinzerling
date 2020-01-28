@@ -37,4 +37,5 @@
     <string name="close">Schließen</string>
     <string name="error_signature">Fehler beim Laden der Unterschrift.</string>
     <string name="signed_at">Signiert am</string>
+    <string name="orders">Aufträge</string>
 </resources>

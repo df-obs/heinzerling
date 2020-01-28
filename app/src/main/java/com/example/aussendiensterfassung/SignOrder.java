@@ -3,9 +3,7 @@ package com.example.aussendiensterfassung;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -81,11 +79,20 @@ public class SignOrder extends AppCompatActivity {
         // Save signatures to ParseFiles
         final ParseFile fileSignatureEmployee = new ParseFile("signature_employee.bmp", byteSignatureEmployee);
         final ParseFile fileSignatureCustomer = new ParseFile("signature_customer.bmp", byteSignatureCustomer);
-        fileSignatureEmployee.saveInBackground();
-        fileSignatureCustomer.saveInBackground();
+        try {
+            fileSignatureEmployee.save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            fileSignatureCustomer.save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         // Update the DB lines with signatures and lock the orders
-        ParseQuery querySignature = ParseQuery.getQuery("Einzelauftrag");
+        ParseQuery<ParseObject> querySignature = ParseQuery.getQuery("Einzelauftrag");
+        querySignature.fromLocalDatastore();
         querySignature.whereContainedIn("objectId", Arrays.asList(orderObjectIds));
         querySignature.whereNotEqualTo("Gesperrt", true);
         querySignature.findInBackground(new FindCallback<ParseObject>() {

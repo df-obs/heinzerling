@@ -47,6 +47,7 @@ public class Kalendar extends AppCompatActivity {
         headlineAuftraege.setText("Aufträge am " + today.getDate() + "." + (today.getMonth()+1) + "." + (today.getYear()+1900));
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Auftrag");
+        query.fromLocalDatastore();
         query.whereGreaterThanOrEqualTo("Datum", today);
         query.whereLessThanOrEqualTo("Datum", tomorrow);
         query.orderByAscending("Datum");

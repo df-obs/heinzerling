@@ -6,6 +6,8 @@ import android.util.Log;
 import com.parse.*;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ParseApplication extends Application {
     public void onCreate() {
@@ -19,25 +21,44 @@ public class ParseApplication extends Application {
                 .build()
         );
 
-        try {
-            ParseObject.unpinAll();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        // Tables that should be kept in LocalDatastore
+        final String[] tables = {"Ansprechpartner", "Artikel", "ArtikelAuftrag", "Auftrag", "Aufzug", "Einzelauftrag", "Kunde", "Monteur", "MonteurAuftrag"};
 
-        String[] tables = {"Ansprechpartner", "Artikel", "ArtikelAuftrag", "Auftrag", "Aufzug", "Einzelauftrag", "Kunde", "Monteur", "MonteurAuftrag"};
-
-        for (String table : tables) {
-            pinData(table);
-        }
+        // Fetch offline Data every 10 seconds
+        TimerTask fetchOfflineData = new TimerTask() {
+            @Override
+            public void run() {
+                ParseQuery<ParseObject> test = ParseQuery.getQuery("Einzelauftrag");
+                test.findInBackground(new FindCallback<ParseObject>() {
+                    public void done(List<ParseObject> resultList, ParseException e) {
+                        if (e == null) {
+                            Log.i("Pin Data", "Established connection, will now refresh data.");
+                            for (String table : tables) {
+                                try {
+                                    ParseObject.unpinAll();
+                                } catch (ParseException ex) {
+                                    ex.printStackTrace();
+                                }
+                                pinData(table);
+                            }
+                        } else {
+                            Log.e("Pin Data", "Error: " + e.getMessage());
+                        }
+                    }
+                });
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(fetchOfflineData,0, 10000);
     }
 
-    public void pinData(String table) {
+    public void pinData(final String table) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(table);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
                 if (e == null) {
                     try {
+                        Log.i("Pin Data", "Fetched and pinned table " + table);
                         ParseObject.pinAll(resultList);
                     } catch (ParseException ex) {
                         ex.printStackTrace();

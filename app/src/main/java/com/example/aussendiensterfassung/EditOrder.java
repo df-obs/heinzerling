@@ -10,6 +10,8 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -93,6 +95,7 @@ public class EditOrder extends AppCompatActivity {
         orderObjectId = intent.getStringExtra("orderObjectId");
 
         ParseQuery<ParseObject> queryOrder = ParseQuery.getQuery("Einzelauftrag");
+        queryOrder.fromLocalDatastore();
         queryOrder.whereEqualTo("objectId", orderObjectId);
         queryOrder.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
@@ -153,35 +156,62 @@ public class EditOrder extends AppCompatActivity {
 
     // Synchronize the material list: SERVER >> USER-INPUT-FIELDS
     protected void getMaterial() {
+        // Generate article list for autocomplete
+        final ArrayList<String> articleList = new ArrayList<>();
+
+        ParseQuery<ParseObject> queryArticleList = ParseQuery.getQuery("Artikel");
+        queryArticleList.fromLocalDatastore();
+        queryArticleList.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> resultList, ParseException e) {
+                if (e == null) {
+                    for (int i = 0; i < resultList.size(); i++) {
+                        ParseObject article = resultList.get(i);
+                        articleList.add(article.getString("Name"));
+                    }
+                }
+            }
+        });
+
         // Find previous attached articles
-        ParseQuery queryOld = ParseQuery.getQuery("ArtikelAuftrag");
+        ParseQuery<ParseObject> queryOld = ParseQuery.getQuery("ArtikelAuftrag");
+        queryOld.fromLocalDatastore();
         queryOld.whereEqualTo("Auftrag", order);
         queryOld.whereEqualTo("Vorgegeben", false);
         queryOld.include("Artikel");
         queryOld.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
                 if (e == null) {
-                    for (int i = 0; i < resultList.size() && i < 8; i++) {
+                    for (int i = 0; i < 8; i++) {
                         // Define fields
                         String inputQtyId = "edit_order_material_input_qty_" + i;
                         String inputArtId = "edit_order_material_input_art_" + i;
                         int inputQtyRes = getResources().getIdentifier(inputQtyId, "id", getPackageName());
                         int inputArtRes = getResources().getIdentifier(inputArtId, "id", getPackageName());
 
-                        EditText fieldQuantity  = findViewById(inputQtyRes);
-                        EditText fieldArticle   = findViewById(inputArtRes);
+                        EditText fieldQuantity            = findViewById(inputQtyRes);
+                        AutoCompleteTextView fieldArticle = findViewById(inputArtRes);
 
-                        // Define position object
-                        ParseObject oldPosition = resultList.get(i);
+                        // Activate AutoComplete
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, articleList);
+                        fieldArticle.setThreshold(1);
+                        fieldArticle.setAdapter(arrayAdapter);
 
-                        // Define field contents
-                        Double valueQuantity    = oldPosition.getDouble("Anzahl");
-                        String valueArticle     = Objects.requireNonNull(oldPosition.getParseObject("Artikel")).getString("Name");
+                        if (i < resultList.size()) {
+                            // Define position object
+                            ParseObject oldPosition = resultList.get(i);
 
-                        // Set field contents
-                        DecimalFormat f = new DecimalFormat("0.00");
-                        fieldQuantity.setText(f.format(valueQuantity));
-                        fieldArticle.setText(valueArticle);
+                            // Define field contents
+                            Double valueQuantity = oldPosition.getDouble("Anzahl");
+                            String valueArticle = Objects.requireNonNull(oldPosition.getParseObject("Artikel")).getString("Name");
+
+                            // Set field contents
+                            DecimalFormat f = new DecimalFormat("0.00");
+                            fieldQuantity.setText(f.format(valueQuantity));
+                            fieldArticle.setText(valueArticle);
+                        } else {
+                            fieldQuantity.setText("");
+                            fieldArticle.setText("");
+                        }
                     }
                 } else {
                     Log.d("AttachArticleQuery", "Error: " + e.getMessage());
@@ -193,7 +223,8 @@ public class EditOrder extends AppCompatActivity {
     // Synchronize the material list: USER-INPUTS >> SERVER.
     protected void saveMaterial() {
         // Find and delete existing positions
-        ParseQuery queryOld = ParseQuery.getQuery("ArtikelAuftrag");
+        ParseQuery<ParseObject> queryOld = ParseQuery.getQuery("ArtikelAuftrag");
+        queryOld.fromLocalDatastore();
         queryOld.whereEqualTo("Auftrag", order);
         queryOld.whereEqualTo("Vorgegeben", false);
         queryOld.findInBackground(new FindCallback<ParseObject>() {
@@ -242,6 +273,7 @@ public class EditOrder extends AppCompatActivity {
 
                 // Check if article exists
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("Artikel");
+                query.fromLocalDatastore();
                 query.whereEqualTo("Name", valueArticle);
                 query.findInBackground(new FindCallback<ParseObject>() {
                     public void done(List<ParseObject> resultList, ParseException e) {
@@ -255,7 +287,8 @@ public class EditOrder extends AppCompatActivity {
                             }
 
                             // Attach article to order
-                            ParseQuery queryArticle = ParseQuery.getQuery("Artikel");
+                            ParseQuery<ParseObject> queryArticle = ParseQuery.getQuery("Artikel");
+                            queryArticle.fromLocalDatastore();
                             queryArticle.whereEqualTo("Name", valueArticle);
                             queryArticle.findInBackground(new FindCallback<ParseObject>() {
                                 public void done(List<ParseObject> resultList, ParseException e) {
@@ -289,15 +322,32 @@ public class EditOrder extends AppCompatActivity {
 
     // Synchronize the mechanics list: SERVER >> USER-INPUT-FIELDS
     protected void getMechanics() {
+        // Generate employee list for autocomplete
+        final ArrayList<String> employeeList = new ArrayList<>();
+
+        ParseQuery<ParseObject> queryEmployeeList = ParseQuery.getQuery("Monteur");
+        queryEmployeeList.fromLocalDatastore();
+        queryEmployeeList.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> resultList, ParseException e) {
+                if (e == null) {
+                    for (int i = 0; i < resultList.size(); i++) {
+                        ParseObject employee = resultList.get(i);
+                        employeeList.add(employee.getString("Name"));
+                    }
+                }
+            }
+        });
+
         // Find previous attached persons
-        ParseQuery queryOld = ParseQuery.getQuery("MonteurAuftrag");
+        ParseQuery<ParseObject> queryOld = ParseQuery.getQuery("MonteurAuftrag");
+        queryOld.fromLocalDatastore();
         queryOld.whereEqualTo("Auftrag", order);
         queryOld.whereEqualTo("Vorgegeben", false);
         queryOld.include("Monteur");
         queryOld.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
                 if (e == null) {
-                    for (int i = 0; i < resultList.size() && i < 8; i++) {
+                    for (int i = 0; i < 8; i++) {
                         // Define fields
                         String inputQtyId  = "edit_order_mechanics_input_qty_" + i;
                         String inputNameId = "edit_order_mechanics_input_name_" + i;
@@ -306,23 +356,34 @@ public class EditOrder extends AppCompatActivity {
                         int inputNameRes = getResources().getIdentifier(inputNameId, "id", getPackageName());
                         int inputCatRes  = getResources().getIdentifier(inputCatId, "id", getPackageName());
 
-                        EditText fieldQuantity = findViewById(inputQtyRes);
-                        EditText fieldName     = findViewById(inputNameRes);
-                        EditText fieldCategory = findViewById(inputCatRes);
+                        EditText fieldQuantity         = findViewById(inputQtyRes);
+                        AutoCompleteTextView fieldName = findViewById(inputNameRes);
+                        EditText fieldCategory         = findViewById(inputCatRes);
 
-                        // Define position object
-                        ParseObject oldPosition = resultList.get(i);
+                        // Activate AutoComplete
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, employeeList);
+                        fieldName.setThreshold(1);
+                        fieldName.setAdapter(arrayAdapter);
 
-                        // Define field contents
-                        Double valueQuantity = oldPosition.getDouble("Stunden");
-                        String valueName     = Objects.requireNonNull(oldPosition.getParseObject("Monteur")).getString("Name");
-                        Double valueCategory = oldPosition.getDouble("Kategorie");
+                        if (i < resultList.size()) {
+                            // Define position object
+                            ParseObject oldPosition = resultList.get(i);
 
-                        // Set field contents
-                        DecimalFormat f = new DecimalFormat("0.00");
-                        fieldQuantity.setText(f.format(valueQuantity));
-                        fieldName.setText(valueName);
-                        fieldCategory.setText(f.format(valueCategory));
+                            // Define field contents
+                            Double valueQuantity = oldPosition.getDouble("Stunden");
+                            String valueName = Objects.requireNonNull(oldPosition.getParseObject("Monteur")).getString("Name");
+                            Double valueCategory = oldPosition.getDouble("Kategorie");
+
+                            // Set field contents
+                            DecimalFormat f = new DecimalFormat("0.00");
+                            fieldQuantity.setText(f.format(valueQuantity));
+                            fieldName.setText(valueName);
+                            fieldCategory.setText(f.format(valueCategory));
+                        } else {
+                            fieldQuantity.setText("");
+                            fieldName.setText("");
+                            fieldCategory.setText("");
+                        }
                     }
                 } else {
                     Log.d("GetMechanicQuery", "Error: " + e.getMessage());
@@ -334,7 +395,8 @@ public class EditOrder extends AppCompatActivity {
     // Synchronize the mechanics list: USER-INPUTS >> SERVER.
     protected void saveMechanics() {
         // Find and delete existing positions
-        ParseQuery queryOld = ParseQuery.getQuery("MonteurAuftrag");
+        ParseQuery<ParseObject> queryOld = ParseQuery.getQuery("MonteurAuftrag");
+        queryOld.fromLocalDatastore();
         queryOld.whereEqualTo("Auftrag", order);
         queryOld.whereEqualTo("Vorgegeben", false);
         queryOld.findInBackground(new FindCallback<ParseObject>() {
@@ -369,7 +431,7 @@ public class EditOrder extends AppCompatActivity {
             final double valueQuantity;
             final double valueCategory;
 
-            // Check if field is empty or quantity is 0 or quantity is not a number
+            // Check if field is empty or quantity is 0 or quantity or category is not a number
             boolean entryOk = false;
 
             if (Objects.equals(valueStrQuantity, "") || !valueStrQuantity.matches("-?\\d+(\\.\\d+)?") || !valueStrCategory.matches("-?\\d+(\\.\\d+)?") || valueName.matches("")) {
@@ -388,7 +450,8 @@ public class EditOrder extends AppCompatActivity {
                 valueCategory = Double.valueOf(valueStrCategory);
 
                 // Attach mechanic to order
-                ParseQuery queryMechanic = ParseQuery.getQuery("Monteur");
+                ParseQuery<ParseObject> queryMechanic = ParseQuery.getQuery("Monteur");
+                queryMechanic.fromLocalDatastore();
                 queryMechanic.whereEqualTo("Name", valueName);
                 queryMechanic.findInBackground(new FindCallback<ParseObject>() {
                     public void done(List<ParseObject> resultList, ParseException e) {
@@ -419,7 +482,8 @@ public class EditOrder extends AppCompatActivity {
     // Synchronize work and remarks: SERVER >> USER-INPUT-FIELDS
     protected void getServices() {
         // Find previous attached persons
-        ParseQuery queryOld = ParseQuery.getQuery("Einzelauftrag");
+        ParseQuery<ParseObject> queryOld = ParseQuery.getQuery("Einzelauftrag");
+        queryOld.fromLocalDatastore();
         queryOld.whereEqualTo("objectId", orderObjectId);
         queryOld.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
@@ -460,7 +524,8 @@ public class EditOrder extends AppCompatActivity {
         final Boolean valueFinished = fieldFinished.isChecked();
 
         // Save user inputs to database
-        ParseQuery queryOrder = ParseQuery.getQuery("Einzelauftrag");
+        ParseQuery<ParseObject> queryOrder = ParseQuery.getQuery("Einzelauftrag");
+        queryOrder.fromLocalDatastore();
         queryOrder.whereEqualTo("objectId", orderObjectId);
         queryOrder.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
@@ -491,6 +556,7 @@ public class EditOrder extends AppCompatActivity {
 
         // Get material
         ParseQuery<ParseObject> queryMaterial = ParseQuery.getQuery("ArtikelAuftrag");
+        queryMaterial.fromLocalDatastore();
         queryMaterial.whereEqualTo("Auftrag", order);
         queryMaterial.include("Artikel");
 
@@ -551,9 +617,9 @@ public class EditOrder extends AppCompatActivity {
 
         // Get mechanics
         ParseQuery<ParseObject> queryMechanics = ParseQuery.getQuery("MonteurAuftrag");
+        queryMechanics.fromLocalDatastore();
         queryMechanics.whereEqualTo("Auftrag", order);
         queryMechanics.include("Monteur");
-
         queryMechanics.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
                 if (e == null) {
@@ -612,6 +678,7 @@ public class EditOrder extends AppCompatActivity {
     // Show the final order overview
     protected void getOverview() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Einzelauftrag");
+        query.fromLocalDatastore();
         query.whereEqualTo("objectId", orderObjectId);
         query.include("Aufzug");
         query.include("Aufzug.Kunde");
