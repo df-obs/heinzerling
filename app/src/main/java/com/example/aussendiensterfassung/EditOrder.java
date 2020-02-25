@@ -160,6 +160,7 @@ public class EditOrder extends AppCompatActivity {
 
         ParseQuery<ParseObject> queryArticleList = ParseQuery.getQuery("Artikel");
         queryArticleList.fromLocalDatastore();
+        queryArticleList.whereEqualTo("Autofill", true);
         queryArticleList.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
                 if (e == null) {
