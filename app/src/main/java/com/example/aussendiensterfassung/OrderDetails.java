@@ -83,7 +83,7 @@ public class OrderDetails extends AppCompatActivity {
                             buttonElevator.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Intent switchToShowOrder = new Intent(getApplicationContext(), Auftragsanzeige.class);
+                                    Intent switchToShowOrder = new Intent(getApplicationContext(), SingleOrder.class);
                                     switchToShowOrder.putExtra("orderObjectId", elevatorObjectId);
                                     startActivity(switchToShowOrder);
                                 }

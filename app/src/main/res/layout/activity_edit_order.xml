@@ -19,7 +19,7 @@
             android:id="@+id/edit_order_material_headline"
             android:layout_width="match_parent"
             android:layout_height="24pt"
-            android:text="Material hinzufügen"
+            android:text="@string/add_material"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -37,7 +37,8 @@
                     android:id="@+id/edit_order_material_text_qty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=" Anz."
+                    android:layout_marginStart="2pt"
+                    android:text="@string/quantity"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -45,7 +46,8 @@
                     android:id="@+id/edit_order_material_text_article"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=" Artikel"
+                    android:layout_marginStart="2pt"
+                    android:text="@string/article"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </TableRow>
@@ -61,7 +63,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Anz."
+                        android:hint="@string/quantity"
                         android:id="@+id/edit_order_material_input_qty_0" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -72,7 +74,7 @@
                     <AutoCompleteTextView
                         android:layout_width="130pt"
                         android:layout_height="wrap_content"
-                        android:hint="Artikel"
+                        android:hint="@string/article"
                         android:id="@+id/edit_order_material_input_art_0" />
                 </android.support.design.widget.TextInputLayout>
             </TableRow>
@@ -88,7 +90,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Anz."
+                        android:hint="@string/quantity"
                         android:id="@+id/edit_order_material_input_qty_1" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -99,7 +101,7 @@
                     <AutoCompleteTextView
                         android:layout_width="130pt"
                         android:layout_height="wrap_content"
-                        android:hint="Artikel"
+                        android:hint="@string/article"
                         android:id="@+id/edit_order_material_input_art_1" />
                 </android.support.design.widget.TextInputLayout>
             </TableRow>
@@ -115,7 +117,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Anz."
+                        android:hint="@string/quantity"
                         android:id="@+id/edit_order_material_input_qty_2" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -126,7 +128,7 @@
                     <AutoCompleteTextView
                         android:layout_width="130pt"
                         android:layout_height="wrap_content"
-                        android:hint="Artikel"
+                        android:hint="@string/article"
                         android:id="@+id/edit_order_material_input_art_2" />
                 </android.support.design.widget.TextInputLayout>
             </TableRow>
@@ -142,7 +144,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Anz."
+                        android:hint="@string/quantity"
                         android:id="@+id/edit_order_material_input_qty_3" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -153,7 +155,7 @@
                     <AutoCompleteTextView
                         android:layout_width="130pt"
                         android:layout_height="wrap_content"
-                        android:hint="Artikel"
+                        android:hint="@string/article"
                         android:id="@+id/edit_order_material_input_art_3" />
                 </android.support.design.widget.TextInputLayout>
             </TableRow>
@@ -169,7 +171,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Anz."
+                        android:hint="@string/quantity"
                         android:id="@+id/edit_order_material_input_qty_4" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -180,7 +182,7 @@
                     <AutoCompleteTextView
                         android:layout_width="130pt"
                         android:layout_height="wrap_content"
-                        android:hint="Artikel"
+                        android:hint="@string/article"
                         android:id="@+id/edit_order_material_input_art_4" />
                 </android.support.design.widget.TextInputLayout>
             </TableRow>
@@ -196,7 +198,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Anz."
+                        android:hint="@string/quantity"
                         android:id="@+id/edit_order_material_input_qty_5" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -207,7 +209,7 @@
                     <AutoCompleteTextView
                         android:layout_width="130pt"
                         android:layout_height="wrap_content"
-                        android:hint="Artikel"
+                        android:hint="@string/article"
                         android:id="@+id/edit_order_material_input_art_5" />
                 </android.support.design.widget.TextInputLayout>
             </TableRow>
@@ -223,7 +225,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Anz."
+                        android:hint="@string/quantity"
                         android:id="@+id/edit_order_material_input_qty_6" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -234,7 +236,7 @@
                     <AutoCompleteTextView
                         android:layout_width="130pt"
                         android:layout_height="wrap_content"
-                        android:hint="Artikel"
+                        android:hint="@string/article"
                         android:id="@+id/edit_order_material_input_art_6" />
                 </android.support.design.widget.TextInputLayout>
             </TableRow>
@@ -250,7 +252,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Anz."
+                        android:hint="@string/quantity"
                         android:id="@+id/edit_order_material_input_qty_7" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -261,7 +263,7 @@
                     <AutoCompleteTextView
                         android:layout_width="130pt"
                         android:layout_height="wrap_content"
-                        android:hint="Artikel"
+                        android:hint="@string/article"
                         android:id="@+id/edit_order_material_input_art_7" />
                 </android.support.design.widget.TextInputLayout>
             </TableRow>
@@ -271,7 +273,7 @@
             android:id="@+id/edit_order_material_button_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Speichern" />
+            android:text="@string/save" />
     </LinearLayout>
 
     <LinearLayout
@@ -288,7 +290,7 @@
             android:id="@+id/edit_order_mechanics_headline"
             android:layout_width="match_parent"
             android:layout_height="24pt"
-            android:text="Monteure hinzufügen"
+            android:text="@string/add_mechanics"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -306,7 +308,8 @@
                     android:id="@+id/edit_order_mechanics_text_qty"
                     android:layout_width="30pt"
                     android:layout_height="wrap_content"
-                    android:text=" Std."
+                    android:layout_marginStart="2pt"
+                    android:text="@string/hour_short"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -314,7 +317,8 @@
                     android:id="@+id/edit_order_mechanics_text_name"
                     android:layout_width="100pt"
                     android:layout_height="wrap_content"
-                    android:text=" Name"
+                    android:layout_marginStart="2pt"
+                    android:text="@string/name"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -322,7 +326,8 @@
                     android:id="@+id/edit_order_mechanics_text_cat"
                     android:layout_width="30pt"
                     android:layout_height="wrap_content"
-                    android:text=" Kat."
+                    android:layout_marginStart="2pt"
+                    android:text="@string/category_short"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </TableRow>
@@ -338,7 +343,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Std."
+                        android:hint="@string/hour_short"
                         android:id="@+id/edit_order_mechanics_input_qty_0" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -349,7 +354,7 @@
                     <AutoCompleteTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Name"
+                        android:hint="@string/name"
                         android:id="@+id/edit_order_mechanics_input_name_0" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -360,7 +365,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Kat."
+                        android:hint="@string/category_short"
                         android:id="@+id/edit_order_mechanics_input_cat_0" />
                 </android.support.design.widget.TextInputLayout>
             </TableRow>
@@ -376,7 +381,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Std."
+                        android:hint="@string/hour_short"
                         android:id="@+id/edit_order_mechanics_input_qty_1" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -387,7 +392,7 @@
                     <AutoCompleteTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Name"
+                        android:hint="@string/name"
                         android:id="@+id/edit_order_mechanics_input_name_1" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -398,7 +403,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Kat."
+                        android:hint="@string/category_short"
                         android:id="@+id/edit_order_mechanics_input_cat_1" />
                 </android.support.design.widget.TextInputLayout>
             </TableRow>
@@ -414,7 +419,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Std."
+                        android:hint="@string/hour_short"
                         android:id="@+id/edit_order_mechanics_input_qty_2" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -425,7 +430,7 @@
                     <AutoCompleteTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Name"
+                        android:hint="@string/name"
                         android:id="@+id/edit_order_mechanics_input_name_2" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -436,7 +441,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Kat."
+                        android:hint="@string/category_short"
                         android:id="@+id/edit_order_mechanics_input_cat_2" />
                 </android.support.design.widget.TextInputLayout>
             </TableRow>
@@ -452,18 +457,19 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Std."
+                        android:hint="@string/hour_short"
                         android:id="@+id/edit_order_mechanics_input_qty_3" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    tools:ignore="TooManyViews">
 
                     <AutoCompleteTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Name"
+                        android:hint="@string/name"
                         android:id="@+id/edit_order_mechanics_input_name_3" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -474,7 +480,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Kat."
+                        android:hint="@string/category_short"
                         android:id="@+id/edit_order_mechanics_input_cat_3" />
                 </android.support.design.widget.TextInputLayout>
             </TableRow>
@@ -490,7 +496,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Std."
+                        android:hint="@string/hour_short"
                         android:id="@+id/edit_order_mechanics_input_qty_4" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -501,7 +507,7 @@
                     <AutoCompleteTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Name"
+                        android:hint="@string/name"
                         android:id="@+id/edit_order_mechanics_input_name_4" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -512,7 +518,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Kat."
+                        android:hint="@string/category_short"
                         android:id="@+id/edit_order_mechanics_input_cat_4" />
                 </android.support.design.widget.TextInputLayout>
             </TableRow>
@@ -528,7 +534,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Std."
+                        android:hint="@string/hour_short"
                         android:id="@+id/edit_order_mechanics_input_qty_5" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -539,7 +545,7 @@
                     <AutoCompleteTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Name"
+                        android:hint="@string/name"
                         android:id="@+id/edit_order_mechanics_input_name_5" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -550,7 +556,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Kat."
+                        android:hint="@string/category_short"
                         android:id="@+id/edit_order_mechanics_input_cat_5" />
                 </android.support.design.widget.TextInputLayout>
             </TableRow>
@@ -566,7 +572,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Std."
+                        android:hint="@string/hour_short"
                         android:id="@+id/edit_order_mechanics_input_qty_6" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -577,7 +583,7 @@
                     <AutoCompleteTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Name"
+                        android:hint="@string/name"
                         android:id="@+id/edit_order_mechanics_input_name_6" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -588,7 +594,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Kat."
+                        android:hint="@string/category_short"
                         android:id="@+id/edit_order_mechanics_input_cat_6" />
                 </android.support.design.widget.TextInputLayout>
             </TableRow>
@@ -604,7 +610,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Std."
+                        android:hint="@string/hour_short"
                         android:id="@+id/edit_order_mechanics_input_qty_7" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -615,7 +621,7 @@
                     <AutoCompleteTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Name"
+                        android:hint="@string/name"
                         android:id="@+id/edit_order_mechanics_input_name_7" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -626,7 +632,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Kat."
+                        android:hint="@string/category_short"
                         android:id="@+id/edit_order_mechanics_input_cat_7" />
                 </android.support.design.widget.TextInputLayout>
             </TableRow>
@@ -635,7 +641,7 @@
             android:id="@+id/edit_order_mechanics_button_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Speichern" />
+            android:text="@string/save" />
     </LinearLayout>
 
     <LinearLayout
@@ -652,7 +658,7 @@
             android:id="@+id/edit_order_services_text_work"
             android:layout_width="match_parent"
             android:layout_height="24pt"
-            android:text="Ausgeführte Arbeiten"
+            android:text="@string/performed_work"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -662,14 +668,15 @@
             android:layout_height="90pt"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="Tragen Sie hier die ausgeführten Arbeiten ein."
+            android:importantForAutofill="no"
+            android:hint="@string/fill_in_performed_work"
             android:inputType="textMultiLine" />
 
         <TextView
             android:id="@+id/edit_order_services_text_remarks"
             android:layout_width="match_parent"
             android:layout_height="24pt"
-            android:text="Bemerkungen"
+            android:text="@string/remarks"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginTop="10pt" />
@@ -680,7 +687,8 @@
             android:layout_height="90pt"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="Falls notwendig, nutzen Sie dieses Feld für Bemerkungen."
+            android:importantForAutofill="no"
+            android:hint="@string/fill_in_remarks"
             android:inputType="textMultiLine" />
 
         <CheckBox
@@ -688,7 +696,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10pt"
-            android:text="Arbeiten abgeschlossen?"
+            android:text="@string/work_done"
             android:textSize="18sp"
             android:textStyle="bold"/>
 
@@ -696,7 +704,7 @@
             android:id="@+id/edit_order_services_button_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Speichern" />
+            android:text="@string/save" />
     </LinearLayout>
 
     <ScrollView
@@ -717,7 +725,8 @@
                 android:id="@+id/edit_order_overview_logo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/heinzerling" />
+                app:srcCompat="@drawable/heinzerling"
+                android:contentDescription="@string/company_name" />
 
             <TextView
                 android:id="@+id/edit_order_overview_headline"
@@ -740,13 +749,14 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    tools:ignore="UselessParent">
 
                     <TextView
                         android:id="@+id/edit_order_overview_text_pos_material"
                         android:layout_width="18pt"
                         android:layout_height="wrap_content"
-                        android:text="Pos"
+                        android:text="@string/position_short"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -754,7 +764,7 @@
                         android:id="@+id/edit_order_overview_text_qty_material"
                         android:layout_width="28pt"
                         android:layout_height="wrap_content"
-                        android:text="Menge"
+                        android:text="@string/quantity"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -762,7 +772,7 @@
                         android:id="@+id/edit_order_overview_text_unit_material"
                         android:layout_width="28pt"
                         android:layout_height="wrap_content"
-                        android:text="Einheit"
+                        android:text="@string/unit"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -770,7 +780,7 @@
                         android:id="@+id/edit_order_overview_text_name_material"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Beschreibung"
+                        android:text="@string/description"
                         android:textSize="16sp"
                         android:textStyle="bold" />
                 </TableRow>
@@ -785,13 +795,14 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    tools:ignore="UselessParent">
 
                     <TextView
                         android:id="@+id/edit_order_overview_text_pos_mechanics"
                         android:layout_width="18pt"
                         android:layout_height="wrap_content"
-                        android:text="Pos"
+                        android:text="@string/position_short"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -799,7 +810,7 @@
                         android:id="@+id/edit_order_overview_text_qty_mechanics"
                         android:layout_width="35pt"
                         android:layout_height="wrap_content"
-                        android:text="Dauer"
+                        android:text="@string/duration"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -807,7 +818,7 @@
                         android:id="@+id/edit_order_overview_text_name_mechanics"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Monteur"
+                        android:text="@string/mechanic"
                         android:textSize="16sp"
                         android:textStyle="bold" />
                 </TableRow>
@@ -835,14 +846,15 @@
                 android:id="@+id/edit_order_overview_button_sign"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Signieren" />
+                android:text="@string/sign" />
 
             <TextView
                 android:id="@+id/edit_order_overview_text_helper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:text="\n\n\n"/>
+                android:text="\n\n\n"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
     </ScrollView>

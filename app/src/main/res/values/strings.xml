@@ -1,4 +1,7 @@
 <resources>
+    <string name="parse_server_url">https://usersold.kompetenzzentrum-siegen.digital/parse-old/</string>
+    <string name="parse_app_id">111234567890</string>
+    <string name="parse_client_key">RestAABBCCDDasdbnfquo!</string>
     <string name="app_name">Außendienst</string>
     <string name="open_calendar">Open Calendar</string>
     <string name="title_navi">Navigation</string>
@@ -8,10 +11,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="parse_server_url">https://usersold.kompetenzzentrum-siegen.digital/parse-old/</string>
-    <string name="parse_app_id">111234567890</string>
-    <string name="parse_client_key">RestAABBCCDDasdbnfquo!</string>
-    <string name="au_endiensterfassung_nhauptmen">Außendiensterfassung Hauptmenü</string>
+    <string name="main_menu">Hauptmenü</string>
     <string name="order_id">Auftragsnummer</string>
     <string name="elevator_id">Aufzugsnummer</string>
     <string name="signature_customer">Unterschrift Kunde</string>
@@ -33,9 +33,28 @@
     <string name="key_safe">Schlüsseldepot</string>
     <string name="last_maintenance">Letzte Wartung</string>
     <string name="performed_work">Ausgeführte Arbeiten</string>
+    <string name="work_done">Arbeiten abgeschlossen?</string>
     <string name="remarks">Bemerkungen</string>
     <string name="close">Schließen</string>
     <string name="error_signature">Fehler beim Laden der Unterschrift.</string>
     <string name="signed_at">Signiert am</string>
     <string name="orders">Aufträge</string>
+    <string name="options">Optionen</string>
+    <string name="set_timestamp">Zeitstempel setzen?</string>
+    <string name="send_customer_mail">Mail an Kunden versenden?</string>
+    <string name="mail_adress">Mail-Adresse</string>
+    <string name="button_open_calendar">KALENDER\nAufträge + Termine einsehen</string>
+    <string name="button_open_documents">DOKUMENTE\nAbgeschlossene Berichte einsehen</string>
+    <string name="add_material">Material hinzufügen</string>
+    <string name="add_mechanics">Monteure hinzufügen</string>
+    <string name="article">Artikel</string>
+    <string name="save">Speichern</string>
+    <string name="name">Name</string>
+    <string name="category_short">Kat.</string>
+    <string name="fill_in_performed_work">Tragen Sie hier die ausgeführten Arbeiten ein.</string>
+    <string name="fill_in_remarks">Falls notwendig, nutzen Sie dieses Feld für Bemerkungen.</string>
+    <string name="orders_at">Aufträge am</string>
+    <string name="clock">Uhr</string>
+    <string name="contact_persons">Ansprechpartner</string>
+    <string name="order">Auftrag</string>
 </resources>

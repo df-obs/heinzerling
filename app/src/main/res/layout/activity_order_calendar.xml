@@ -5,9 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Kalendar">
-
-
+    tools:context=".OrderCalendar">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -17,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-            android:id="@+id/weekCalendar"
+            android:id="@+id/calendar_calendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:mcv_firstDayOfWeek="monday"
@@ -26,7 +24,7 @@
             app:mcv_showOtherDates="all" />
 
         <TextView
-            android:id="@+id/headlineAuftraege"
+            android:id="@+id/calendar_headline"
             android:layout_width="match_parent"
             android:layout_height="30pt"
             android:gravity="center"
@@ -35,17 +33,14 @@
             android:textStyle="bold" />
 
         <LinearLayout
-            android:id="@+id/kalenderLayout"
+            android:id="@+id/calendar_layout"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent">
         </LinearLayout>
+
     </LinearLayout>
-
-
-
-
 
 </android.support.constraint.ConstraintLayout>

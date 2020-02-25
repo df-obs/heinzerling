@@ -78,7 +78,8 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    tools:ignore="UselessParent">
 
                     <TextView
                         android:id="@+id/locked_orders_details_text_pos_material"
@@ -123,7 +124,8 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    tools:ignore="UselessParent">
 
                     <TextView
                         android:id="@+id/locked_orders_details_text_pos_mechanics"

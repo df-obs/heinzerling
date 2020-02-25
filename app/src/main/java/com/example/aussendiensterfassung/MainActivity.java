@@ -3,12 +3,9 @@ package com.example.aussendiensterfassung;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.*;
 import android.view.*;
 
 public class MainActivity extends AppCompatActivity {
-
-    ImageButton imageButtonCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openCalendar(View view) {
-        Intent startCalendarActivity = new Intent(this, Kalendar.class);
+        Intent startCalendarActivity = new Intent(this, OrderCalendar.class);
         startActivity(startCalendarActivity);
     }
 

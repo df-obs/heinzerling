@@ -101,6 +101,8 @@ public class EditOrder extends AppCompatActivity {
             public void done(List<ParseObject> resultList, ParseException e) {
                 if (e == null) {
                     order = resultList.get(0);
+                    // Fill user input fields with existing data
+                    getMaterial();
                 } else {
                     Log.d("Edit Order", "Error: " + e.getMessage());
                 }
@@ -149,9 +151,6 @@ public class EditOrder extends AppCompatActivity {
                 startActivity(switchToSignOrder);
             }
         });
-
-        // Fill user input fields with existing data
-        getMaterial();
     }
 
     // Synchronize the material list: SERVER >> USER-INPUT-FIELDS
@@ -260,7 +259,7 @@ public class EditOrder extends AppCompatActivity {
             if (Objects.equals(valueStrQuantity, "") || !valueStrQuantity.matches("-?\\d+(\\.\\d+)?") || valueArticle.matches("")) {
                 Log.d("AttachArticleCheck", "Info: Entry in line " + i + " is not correct, will not save article.");
             } else {
-                if (Double.valueOf(valueStrQuantity) > 0) {
+                if (Double.parseDouble(valueStrQuantity) > 0) {
                     entryOk = true;
                 } else {
                     Log.d("AttachArticleCheck", "Info: Quantity in line " + i + " is 0, will not save article.");
@@ -269,7 +268,7 @@ public class EditOrder extends AppCompatActivity {
 
             if (entryOk) { // User input is okay, proceed
                 // Convert value quantity
-                valueQuantity = Double.valueOf(valueStrQuantity);
+                valueQuantity = Double.parseDouble(valueStrQuantity);
 
                 // Check if article exists
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("Artikel");
@@ -437,7 +436,7 @@ public class EditOrder extends AppCompatActivity {
             if (Objects.equals(valueStrQuantity, "") || !valueStrQuantity.matches("-?\\d+(\\.\\d+)?") || !valueStrCategory.matches("-?\\d+(\\.\\d+)?") || valueName.matches("")) {
                 Log.d("AttachMechanicsCheck", "Info: Entry in line " + i + " is not correct, will not save mechanic.");
             } else {
-                if (Double.valueOf(valueStrQuantity) > 0) {
+                if (Double.parseDouble(valueStrQuantity) > 0) {
                     entryOk = true;
                 } else {
                     Log.d("AttachMechanicsCheck", "Info: Quantity in line " + i + " is 0, will not save mechanic.");
@@ -446,8 +445,8 @@ public class EditOrder extends AppCompatActivity {
 
             if (entryOk) { // User input is okay, proceed
                 // Convert value quantity and category
-                valueQuantity = Double.valueOf(valueStrQuantity);
-                valueCategory = Double.valueOf(valueStrCategory);
+                valueQuantity = Double.parseDouble(valueStrQuantity);
+                valueCategory = Double.parseDouble(valueStrCategory);
 
                 // Attach mechanic to order
                 ParseQuery<ParseObject> queryMechanic = ParseQuery.getQuery("Monteur");

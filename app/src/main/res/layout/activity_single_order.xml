@@ -5,10 +5,10 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Auftragsanzeige">
+    tools:context=".SingleOrder">
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/nav_auftrag"
+        android:id="@+id/single_order_navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
@@ -20,7 +20,7 @@
         app:menu="@menu/bottom_nav_menu" />
 
     <LinearLayout
-        android:id="@+id/layoutAuftragAnzeige"
+        android:id="@+id/single_order_layout_overview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
@@ -29,14 +29,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/heinzerlingLogo"
+            android:id="@+id/single_order_overview_logo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/company_name"
             app:srcCompat="@drawable/heinzerling" />
 
         <TextView
-            android:id="@+id/auftragsNr"
+            android:id="@+id/single_order_overview_headline"
             android:layout_width="match_parent"
             android:layout_height="24pt"
             android:layout_marginTop="2pt"
@@ -44,22 +44,23 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/auftragsDaten"
+            android:id="@+id/single_order_overview_text_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp" />
 
         <TableLayout
-            android:id="@+id/artikelTabelle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/single_order_overview_table_material">
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                tools:ignore="UselessParent">
 
                 <TextView
-                    android:id="@+id/tablePos"
+                    android:id="@+id/single_order_overview_text_pos_material"
                     android:layout_width="18pt"
                     android:layout_height="wrap_content"
                     android:text="@string/position_short"
@@ -67,7 +68,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tableMenge"
+                    android:id="@+id/single_order_overview_text_qty_material"
                     android:layout_width="28pt"
                     android:layout_height="wrap_content"
                     android:text="@string/quantity"
@@ -75,7 +76,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tableEinheit"
+                    android:id="@+id/single_order_overview_text_unit_material"
                     android:layout_width="28pt"
                     android:layout_height="wrap_content"
                     android:text="@string/unit"
@@ -83,7 +84,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/single_order_overview_text_name_material"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/description"
@@ -93,15 +94,14 @@
         </TableLayout>
 
         <TextView
-            android:id="@+id/letzteWartung"
+            android:id="@+id/single_order_overview_text_last_maintenance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp" />
-
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layoutAnsprechpartnerAnzeige"
+        android:id="@+id/single_order_layout_contacts"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
@@ -111,16 +111,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/auftragsNrKontakte"
+            android:id="@+id/single_order_contacts_headline"
             android:layout_width="match_parent"
             android:layout_height="38pt"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:text="@string/contact_persons"/>
 
         <TableLayout
+            android:id="@+id/single_order_contacts_table"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/ansprechpartnerTabelle">
+            android:layout_height="match_parent">
         </TableLayout>
     </LinearLayout>
 

@@ -134,6 +134,7 @@ public class LockedOrders extends AppCompatActivity {
                     String valueWork = finalOrder.getString("Arbeiten");
                     String valueRemarks = finalOrder.getString("Bemerkungen");
                     Date valueUpdated = finalOrder.getUpdatedAt();
+                    boolean valueShowTimestamp = finalOrder.getBoolean("Zeitstempel");
                     String valueStrUpdated = timeFormat.format(valueUpdated);
 
                     // Get and print images (signatures)
@@ -205,9 +206,13 @@ public class LockedOrders extends AppCompatActivity {
                         viewRemarks.setText("\n");
                     }
 
-                    // Print signature date
+                    // Print signature date (it timestamp option is set)
                     TextView viewSignatureDate = findViewById(R.id.locked_orders_details_signature_date);
-                    viewSignatureDate.setText(String.format("%s %s\n", getString(R.string.signed_at), valueStrUpdated));
+                    if (valueShowTimestamp) {
+                        viewSignatureDate.setText(String.format("%s %s\n", getString(R.string.signed_at), valueStrUpdated));
+                    } else {
+                        viewSignatureDate.setVisibility(View.GONE);
+                    }
 
                     // Get positions (mechanics + material)
                     getPositions(finalOrder);
