@@ -155,7 +155,7 @@
                     <AutoCompleteTextView
                         android:layout_width="130pt"
                         android:layout_height="wrap_content"
-                        android:hint="@string/quantity_short"
+                        android:hint="@string/article"
                         android:id="@+id/edit_order_material_input_art_3" />
                 </android.support.design.widget.TextInputLayout>
             </TableRow>
