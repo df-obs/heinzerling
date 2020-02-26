@@ -209,6 +209,7 @@ public class LockedOrders extends AppCompatActivity {
                     // Print signature date (it timestamp option is set)
                     TextView viewSignatureDate = findViewById(R.id.locked_orders_details_signature_date);
                     if (valueShowTimestamp) {
+                        viewSignatureDate.setVisibility(View.VISIBLE);
                         viewSignatureDate.setText(String.format("%s %s\n", getString(R.string.signed_at), valueStrUpdated));
                     } else {
                         viewSignatureDate.setVisibility(View.GONE);
