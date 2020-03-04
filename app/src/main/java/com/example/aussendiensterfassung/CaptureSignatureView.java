@@ -1,3 +1,15 @@
+/* ***************************************************************************************
+ * CaptureSignatureView
+ *
+ * This class saves the content of a View to a ByteArray / Bitmap.
+ * It is used for saving the users signature.
+ *
+ * Taken from https://stackoverflow.com/questions/7228191/android-signature-capture
+ * Author: https://stackoverflow.com/users/1876355/pierre
+ * ***************************************************************************************
+ */
+
+
 package com.example.aussendiensterfassung;
 
 import android.content.Context;
