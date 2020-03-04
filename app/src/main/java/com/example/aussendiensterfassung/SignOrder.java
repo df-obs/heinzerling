@@ -1,9 +1,12 @@
 package com.example.aussendiensterfassung;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -13,10 +16,10 @@ import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -99,19 +102,9 @@ public class SignOrder extends AppCompatActivity {
 
     // Save Signatures to DB
     protected void saveSignatures() {
-        // Save signatures to ParseFiles
-        final ParseFile fileSignatureEmployee = new ParseFile("signature_employee.bmp", byteSignatureEmployee);
-        final ParseFile fileSignatureCustomer = new ParseFile("signature_customer.bmp", byteSignatureCustomer);
-        try {
-            fileSignatureEmployee.save();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        try {
-            fileSignatureCustomer.save();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        // Encode signatures
+        final String stringSignatureEmployee = encodeImage(byteSignatureEmployee);
+        final String stringSignatureCustomer = encodeImage(byteSignatureCustomer);
 
         // Update the DB lines with signatures and lock the orders
         ParseQuery<ParseObject> querySignature = ParseQuery.getQuery("Einzelauftrag");
@@ -123,13 +116,9 @@ public class SignOrder extends AppCompatActivity {
                 if (e == null) {
                     for (int i = 0; i < resultList.size(); i++) {
                         ParseObject orderObject = resultList.get(i);
-                        orderObject.put("Unterschrift_Monteur", fileSignatureEmployee);
-                        orderObject.put("Unterschrift_Kunde", fileSignatureCustomer);
-                        orderObject.put("Mail_an_Kunde", booleanSendCustomerMail);
+                        orderObject.put("Unterschrift_Monteur", stringSignatureEmployee);
+                        orderObject.put("Unterschrift_Kunde", stringSignatureCustomer);
                         orderObject.put("Zeitstempel", booleanSaveTimestamp);
-                        if (booleanSendCustomerMail) {
-                            orderObject.put("Mailadresse", inputMailAdress);
-                        }
                         orderObject.put("Gesperrt", true);
                         orderObject.saveEventually();
                     }
@@ -145,5 +134,20 @@ public class SignOrder extends AppCompatActivity {
             switchToLockedOrders.putExtra("orderObjectId", orderObjectIds[0]);
         }
         startActivity(switchToLockedOrders);
+    }
+
+    // Resizes and Base64-encodes an image (ByteArray)
+    protected String encodeImage(byte[] byteImg) {
+        // Convert ByteArray to Bitmap and resize
+        Bitmap bitmap = BitmapFactory.decodeByteArray(byteImg, 0, byteImg.length);
+        bitmap =  Bitmap.createScaledBitmap(bitmap, 800, 320, false);
+
+        // Convert Bitmap to ByteArray and compress it
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 95, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+        // Return Base64-encoded String
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 }

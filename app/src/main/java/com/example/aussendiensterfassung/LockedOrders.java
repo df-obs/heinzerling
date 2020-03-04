@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -138,33 +139,12 @@ public class LockedOrders extends AppCompatActivity {
                     String valueStrUpdated = timeFormat.format(valueUpdated);
 
                     // Get and print images (signatures)
-                    ParseFile valueSignatureMechanic = (ParseFile) finalOrder.get("Unterschrift_Monteur");
-                    Objects.requireNonNull(valueSignatureMechanic).getDataInBackground(new GetDataCallback() {
-                        public void done(byte[] data, ParseException e) {
-                            if (e == null) {
-                                Bitmap imageSignatureMechanic = BitmapFactory.decodeByteArray(data, 0, data.length);
-                                ImageView viewSignatureMechanic = findViewById(R.id.locked_orders_details_signature_employee);
-                                viewSignatureMechanic.setImageBitmap(imageSignatureMechanic);
-                            } else {
-                                ImageView viewSignatureMechanic = findViewById(R.id.locked_orders_details_signature_employee);
-                                viewSignatureMechanic.setContentDescription(getString(R.string.error_signature));
-                            }
-                        }
-                    });
-
-                    ParseFile valueSignatureCustomer = (ParseFile) finalOrder.get("Unterschrift_Kunde");
-                    Objects.requireNonNull(valueSignatureCustomer).getDataInBackground(new GetDataCallback() {
-                        public void done(byte[] data, ParseException e) {
-                            if (e == null) {
-                                Bitmap imageSignatureCustomer = BitmapFactory.decodeByteArray(data, 0, data.length);
-                                ImageView viewSignatureCustomer = findViewById(R.id.locked_orders_details_signature_customer);
-                                viewSignatureCustomer.setImageBitmap(imageSignatureCustomer);
-                            } else {
-                                ImageView viewSignatureCustomer = findViewById(R.id.locked_orders_details_signature_employee);
-                                viewSignatureCustomer.setContentDescription(getString(R.string.error_signature));
-                            }
-                        }
-                    });
+                    String stringSignatureEmployee = finalOrder.getString("Unterschrift_Monteur");
+                    String stringSignatureCustomer = finalOrder.getString("Unterschrift_Kunde");
+                    ImageView viewSignatureEmployee = findViewById(R.id.locked_orders_details_signature_employee);
+                    ImageView viewSignatureCustomer = findViewById(R.id.locked_orders_details_signature_customer);
+                    printBase64Image(Objects.requireNonNull(stringSignatureEmployee), viewSignatureEmployee);
+                    printBase64Image(Objects.requireNonNull(stringSignatureCustomer), viewSignatureCustomer);
 
                     // Print headline
                     TextView textHeadline = findViewById(R.id.locked_orders_details_headline);
@@ -378,5 +358,15 @@ public class LockedOrders extends AppCompatActivity {
             Intent switchToMain = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(switchToMain);
         }
+    }
+
+    // Decode and Base64-Images
+    protected void printBase64Image(String stringImg, ImageView imageView)
+    {
+        byte[] byteStream = Base64.decode(stringImg, Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(byteStream, 0, byteStream.length);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        imageView.setAdjustViewBounds(true);
+        imageView.setImageBitmap(bitmap);
     }
 }
