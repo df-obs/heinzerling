@@ -258,7 +258,10 @@ public class EditOrder extends AppCompatActivity {
             // Check if field is empty or quantity is 0 or quantity is not a number
             boolean entryOk = false;
 
-            if (Objects.equals(valueStrQuantity, "") || !valueStrQuantity.matches("-?\\d+(\\.\\d+)?") || valueArticle.matches("")) {
+            if (Objects.equals(valueStrQuantity, "") || valueArticle.matches("")) {
+                Log.d("AttachArticleCheck", "Info: Entry in line " + i + " is empty, will not save article.");
+            } else if (!valueStrQuantity.matches("-?\\d+(\\.\\d+)?")) {
+                Toast.makeText(getApplicationContext(), getString(R.string.error_saving_wrong_input), Toast.LENGTH_SHORT).show();
                 Log.d("AttachArticleCheck", "Info: Entry in line " + i + " is not correct, will not save article.");
             } else {
                 if (Double.parseDouble(valueStrQuantity) > 0) {
@@ -317,8 +320,6 @@ public class EditOrder extends AppCompatActivity {
                         }
                     }
                 });
-            } else {
-                Toast.makeText(getApplicationContext(), getString(R.string.error_saving_wrong_input), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -437,7 +438,10 @@ public class EditOrder extends AppCompatActivity {
             // Check if field is empty or quantity is 0 or quantity or category is not a number
             boolean entryOk = false;
 
-            if (Objects.equals(valueStrQuantity, "") || !valueStrQuantity.matches("-?\\d+(\\.\\d+)?") || !valueStrCategory.matches("-?\\d+(\\.\\d+)?") || valueName.matches("")) {
+            if (Objects.equals(valueStrQuantity, "") || valueName.matches("")) {
+                Log.d("AttachMechanicsCheck", "Info: Entry in line " + i + " is empty, will not save mechanic.");
+            } else if (!valueStrQuantity.matches("-?\\d+(\\.\\d+)?") || !valueStrCategory.matches("-?\\d+(\\.\\d+)?")) {
+                Toast.makeText(getApplicationContext(), getString(R.string.error_saving_wrong_input), Toast.LENGTH_SHORT).show();
                 Log.d("AttachMechanicsCheck", "Info: Entry in line " + i + " is not correct, will not save mechanic.");
             } else {
                 if (Double.parseDouble(valueStrQuantity) > 0) {
@@ -479,8 +483,6 @@ public class EditOrder extends AppCompatActivity {
                         }
                     }
                 });
-            } else {
-                Toast.makeText(getApplicationContext(), getString(R.string.error_saving_wrong_input), Toast.LENGTH_SHORT).show();
             }
         }
     }
