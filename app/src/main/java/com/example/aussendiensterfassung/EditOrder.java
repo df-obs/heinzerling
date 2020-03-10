@@ -20,6 +20,7 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -316,6 +317,8 @@ public class EditOrder extends AppCompatActivity {
                         }
                     }
                 });
+            } else {
+                Toast.makeText(getApplicationContext(), getString(R.string.error_saving_wrong_input), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -459,6 +462,7 @@ public class EditOrder extends AppCompatActivity {
                             if (resultList.size() == 0) {
                                 // No matching mechanic, incorrect user input
                                 Log.d("AttachMechanicQuery", "Error: No matching mechanic, will not save it.");
+                                Toast.makeText(getApplicationContext(), getString(R.string.error_saving_wrong_employee), Toast.LENGTH_SHORT).show();
                             } else {
                                 // Get matching mechanic and attach it to order
                                 ParseObject mechanic = resultList.get(0);
@@ -475,6 +479,8 @@ public class EditOrder extends AppCompatActivity {
                         }
                     }
                 });
+            } else {
+                Toast.makeText(getApplicationContext(), getString(R.string.error_saving_wrong_input), Toast.LENGTH_SHORT).show();
             }
         }
     }

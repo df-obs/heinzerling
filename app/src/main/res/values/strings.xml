@@ -75,4 +75,6 @@
     <string name="work">Arbeiten</string>
     <string name="done">abgeschlossen</string>
     <string name="not_done">nicht abgeschlossen</string>
+    <string name="error_saving_wrong_input">Fehler beim Speichern. Falsche Eingabe.</string>
+    <string name="error_saving_wrong_employee">Fehler beim Speichern. Monteur nicht gefunden.</string>
 </resources>

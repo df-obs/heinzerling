@@ -191,6 +191,7 @@ public class SignOrder extends AppCompatActivity {
         // Define mail body
         String body = String.format("%s\n\n%s %s.\n\n%s\n\n%s", getString(R.string.mail_salutation), getString(R.string.mail_confirmation_body), subject, getString(R.string.mail_ending), getString(R.string.company_name));
 
+        // Create attachments
         PdfConverter converter = PdfConverter.getInstance();
         String folder = getApplicationContext().getFilesDir().toString();
         List<String> objects = new ArrayList<>(Arrays.asList(orderObjectIds));
