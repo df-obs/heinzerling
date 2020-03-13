@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.Environment;
 import android.print.PdfConverter;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.FileProvider;
@@ -191,18 +191,6 @@ public class SignOrder extends AppCompatActivity {
         // Define mail body
         String body = String.format("%s\n\n%s %s.\n\n%s\n\n%s", getString(R.string.mail_salutation), getString(R.string.mail_confirmation_body), subject, getString(R.string.mail_ending), getString(R.string.company_name));
 
-        // Create attachments
-        PdfConverter converter = PdfConverter.getInstance();
-        String folder = getApplicationContext().getFilesDir().toString();
-        List<String> objects = new ArrayList<>(Arrays.asList(orderObjectIds));
-        ArrayList<File> attachments = new ArrayList<>();
-
-        for (int i=0; i<objects.size(); i++) {
-            File file = new File(folder, getString(R.string.order_confirmation_short) + "_" + orderIds.get(i) + ".pdf");
-            converter.convert(getApplicationContext(), orderAsHtml(objects.get(i)), file);
-            attachments.add(file);
-        }
-
         // Create mail intent
         final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
         emailIntent.setType("text/xml");
@@ -221,8 +209,10 @@ public class SignOrder extends AppCompatActivity {
         emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         ArrayList<Uri> uris = new ArrayList<>();
 
-        for (int i = 0; i < attachments.size(); i++) {
-            uris.add(FileProvider.getUriForFile(this,BuildConfig.APPLICATION_ID + ".provider", attachments.get(i)));
+        for (int i = 0; i < orderIds.size(); i++) {
+            File folder = new File(new File(Environment.getExternalStorageDirectory(), "/Documents/"), "/ABs/");
+            File attachment = new File(folder, getString(R.string.order_confirmation_short) + "_" + orderIds.get(i) + ".pdf");
+            uris.add(FileProvider.getUriForFile(this,BuildConfig.APPLICATION_ID + ".provider", attachment));
         }
 
         emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
@@ -238,10 +228,34 @@ public class SignOrder extends AppCompatActivity {
         //startActivity(switchToLockedOrders);
     }
 
+    // Create attachments and send mail when finished
     public void createAttachments() {
+        PdfConverter converter = PdfConverter.getInstance();
+        converter.setListener(new PdfConverter.Listener() {
+            @Override
+            public void onFinishing() {
+                sendMail();
+            }
+        });
 
+        //String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Documents/";
+        ArrayList<File> files = new ArrayList<>();
+        ArrayList<String> htmlStrings = new ArrayList<>();
 
-        sendMail();
+        File folder = new File(Environment.getExternalStorageDirectory(),"/Documents/ABs/");
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+
+        for (int i=0; i<orderIds.size(); i++) {
+            File file = new File(folder, getString(R.string.order_confirmation_short) + "_" + orderIds.get(i) + ".pdf");
+            String htmlString = orderAsHtml(orderObjectIds[i]);
+
+            files.add(file);
+            htmlStrings.add(htmlString);
+        }
+
+        converter.convertMultiple(getApplicationContext(), htmlStrings, files);
     }
 
     protected String orderAsHtml(String orderObjectId) {

@@ -5,6 +5,7 @@
 
 package android.print;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
@@ -13,7 +14,10 @@ import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.example.aussendiensterfassung.SignOrder;
+
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Converts HTML to PDF.
@@ -32,8 +36,13 @@ public class PdfConverter implements Runnable {
     private PrintAttributes mPdfPrintAttrs;
     private boolean mIsCurrentlyConverting;
     private WebView mWebView;
+    private Listener mListener;
+    private ArrayList<String> mHtmlStrings;
+    private ArrayList<File> mFiles;
 
     private PdfConverter() {
+        mHtmlStrings = new ArrayList<>();
+        mFiles = new ArrayList<>();
     }
 
     public static synchronized PdfConverter getInstance() {
@@ -43,25 +52,30 @@ public class PdfConverter implements Runnable {
         return sInstance;
     }
 
+    public interface Listener {
+        public void onFinishing();
+    }
+
+    public void setListener(Listener listener) {
+        mListener = listener;
+    }
+
     @Override
     public void run() {
         mWebView = new WebView(mContext);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
-                    throw new RuntimeException("call requires API level 19");
-                else {
-                    PrintDocumentAdapter documentAdapter = mWebView.createPrintDocumentAdapter();
-                    documentAdapter.onLayout(null, getPdfPrintAttrs(), null, new PrintDocumentAdapter.LayoutResultCallback() {
-                    }, null);
-                    documentAdapter.onWrite(new PageRange[]{PageRange.ALL_PAGES}, getOutputFileDescriptor(), null, new PrintDocumentAdapter.WriteResultCallback() {
-                        @Override
-                        public void onWriteFinished(PageRange[] pages) {
-                            destroy();
-                        }
-                    });
-                }
+                PrintDocumentAdapter documentAdapter = mWebView.createPrintDocumentAdapter();
+                documentAdapter.onLayout(null, getPdfPrintAttrs(), null, new PrintDocumentAdapter.LayoutResultCallback() {}, null);
+                documentAdapter.onWrite(new PageRange[]{PageRange.ALL_PAGES}, getOutputFileDescriptor(), null, new PrintDocumentAdapter.WriteResultCallback() {
+                    @Override
+                    public void onWriteFinished(PageRange[] pages) {
+                        mHtmlStrings.remove(0);
+                        mFiles.remove(0);
+                        destroy();
+                    }
+                });
             }
         });
         mWebView.loadData(mHtmlString, "text/HTML", "UTF-8");
@@ -93,6 +107,14 @@ public class PdfConverter implements Runnable {
         runOnUiThread(this);
     }
 
+    public void convertMultiple(Context context, ArrayList<String> htmlStrings, ArrayList<File> files) {
+        mHtmlStrings = htmlStrings;
+        mFiles = files;
+        mContext = context;
+
+        destroy();
+    }
+
     private ParcelFileDescriptor getOutputFileDescriptor() {
         try {
             mPdfFile.createNewFile();
@@ -104,14 +126,11 @@ public class PdfConverter implements Runnable {
     }
 
     private PrintAttributes getDefaultPrintAttrs() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return null;
-
         return new PrintAttributes.Builder()
                 .setMediaSize(PrintAttributes.MediaSize.NA_GOVT_LETTER)
                 .setResolution(new PrintAttributes.Resolution("RESOLUTION_ID", "RESOLUTION_ID", 600, 600))
                 .setMinMargins(PrintAttributes.Margins.NO_MARGINS)
                 .build();
-
     }
 
     private void runOnUiThread(Runnable runnable) {
@@ -120,11 +139,16 @@ public class PdfConverter implements Runnable {
     }
 
     private void destroy() {
-        mContext = null;
-        mHtmlString = null;
-        mPdfFile = null;
-        mPdfPrintAttrs = null;
         mIsCurrentlyConverting = false;
-        mWebView = null;
+        if (mHtmlStrings.size() > 0) {
+            convert(mContext, mHtmlStrings.get(0), mFiles.get(0));
+        } else {
+            mHtmlString = null;
+            mPdfFile = null;
+            mPdfPrintAttrs = null;
+            mWebView = null;
+            mContext = null;
+            mListener.onFinishing();
+        }
     }
 }
