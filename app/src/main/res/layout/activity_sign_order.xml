@@ -72,6 +72,42 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/sign_order_layout_waiting"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="20pt"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/sign_order_progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:indeterminateTint="#2196F3" />
+
+        <TextView
+            android:id="@+id/sign_order_text_finished"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/creating_finished"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginVertical="20pt"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/sign_order_button_intent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_open_documents"
+            android:textSize="14sp"
+            android:visibility="gone"
+            android:onClick="switchToLockedOrders"/>
+    </LinearLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/sign_order_fab_save"
         android:layout_width="wrap_content"

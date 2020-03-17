@@ -77,4 +77,7 @@
     <string name="not_done">nicht abgeschlossen</string>
     <string name="error_saving_wrong_input">Fehler beim Speichern. Falsche Eingabe.</string>
     <string name="error_saving_wrong_employee">Fehler beim Speichern. Monteur nicht gefunden.</string>
+    <string name="creating_pdf">Generiere PDF…</string>
+    <string name="creating_finished">Der Vorgang wurde erfolgreich abgeschlossen.</string>
+    <string name="saved">Erfolgreich gespeichert!</string>
 </resources>

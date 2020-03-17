@@ -12,9 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
@@ -47,6 +49,9 @@ public class SignOrder extends AppCompatActivity {
 
     protected CaptureSignatureView viewSignatureEmployee;
     protected CaptureSignatureView viewSignatureCustomer;
+    protected FloatingActionButton fabSave;
+    protected LinearLayout layoutOptions;
+    protected TextView viewHeadline;
 
     protected String stringSignatureEmployee;
     protected String stringSignatureCustomer;
@@ -65,7 +70,7 @@ public class SignOrder extends AppCompatActivity {
         orderObjectIds = orderObjectId.split(Pattern.quote( "," ));
 
         // Define headline
-        final TextView viewHeadline = findViewById(R.id.sign_order_headline);
+        viewHeadline = findViewById(R.id.sign_order_headline);
 
         // Define layout for employee signature
         final LinearLayout layoutSignatureEmployee = findViewById(R.id.sign_order_layout_employee);
@@ -78,13 +83,13 @@ public class SignOrder extends AppCompatActivity {
         layoutSignatureCustomer.addView(viewSignatureCustomer, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
         // Define layout for options
-        final LinearLayout layoutOptions = findViewById(R.id.sign_order_layout_options);
+        layoutOptions = findViewById(R.id.sign_order_layout_options);
         final CheckBox fieldTimestamp = findViewById(R.id.sign_order_input_timestamp);
         final CheckBox fieldCustomerMail = findViewById(R.id.sign_order_input_mail);
         final EditText fieldMailAdress  = findViewById(R.id.sign_order_input_mailadress);
 
         // Initialize button for saving
-        FloatingActionButton fabSave = findViewById(R.id.sign_order_fab_save);
+        fabSave = findViewById(R.id.sign_order_fab_save);
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,6 +113,7 @@ public class SignOrder extends AppCompatActivity {
                         booleanSendCustomerMail = fieldCustomerMail.isChecked();
                         inputMailAdress = fieldMailAdress.getText().toString();
                         saveSignatures();
+                        break;
                 }
             }
         });
@@ -217,19 +223,39 @@ public class SignOrder extends AppCompatActivity {
 
         emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
 
+        // Change view so the user sees that everything is finished
+        viewHeadline.setText(getString(R.string.saved));
+        ProgressBar progressBar = findViewById(R.id.sign_order_progress_bar);
+        TextView textFinshed = findViewById(R.id.sign_order_text_finished);
+        Button buttonIntent = findViewById(R.id.sign_order_button_intent);
+
+        progressBar.setVisibility(View.GONE);
+        textFinshed.setVisibility(View.VISIBLE);
+        buttonIntent.setVisibility(View.VISIBLE);
+
         // Start intent
         this.startActivity(emailIntent);
+    }
 
-        // Show orders
-        //Intent switchToLockedOrders = new Intent(getApplicationContext(), LockedOrders.class);
-        //if (orderObjectIds.length==1) {
-        //    switchToLockedOrders.putExtra("orderObjectId", orderObjectIds[0]);
-        //}
-        //startActivity(switchToLockedOrders);
+    // When everything is finished, switch to locked orders activity
+    public void switchToLockedOrders(View v) {
+        Intent switchToLockedOrders = new Intent(getApplicationContext(), LockedOrders.class);
+        if (orderObjectIds.length==1) {
+            switchToLockedOrders.putExtra("orderObjectId", orderObjectIds[0]);
+        }
+        startActivity(switchToLockedOrders);
     }
 
     // Create attachments and send mail when finished
     public void createAttachments() {
+        // Show a progress bar because pdf creation will take a while
+        LinearLayout layoutWaiting = findViewById(R.id.sign_order_layout_waiting);
+        layoutOptions.setVisibility(View.GONE);
+        fabSave.hide();
+        layoutWaiting.setVisibility(View.VISIBLE);
+        viewHeadline.setText(getString(R.string.creating_pdf));
+
+        // Create PDFs
         PdfConverter converter = PdfConverter.getInstance();
         converter.setListener(new PdfConverter.Listener() {
             @Override
@@ -238,7 +264,6 @@ public class SignOrder extends AppCompatActivity {
             }
         });
 
-        //String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Documents/";
         ArrayList<File> files = new ArrayList<>();
         ArrayList<String> htmlStrings = new ArrayList<>();
 
