@@ -216,7 +216,7 @@ public class SignOrder extends AppCompatActivity {
         ArrayList<Uri> uris = new ArrayList<>();
 
         for (int i = 0; i < orderIds.size(); i++) {
-            File folder = new File(new File(Environment.getExternalStorageDirectory(), "/Documents/"), "/ABs/");
+            File folder = new File(getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "ABs");
             File attachment = new File(folder, getString(R.string.order_confirmation_short) + "_" + orderIds.get(i) + ".pdf");
             uris.add(FileProvider.getUriForFile(this,BuildConfig.APPLICATION_ID + ".provider", attachment));
         }
@@ -267,7 +267,8 @@ public class SignOrder extends AppCompatActivity {
         ArrayList<File> files = new ArrayList<>();
         ArrayList<String> htmlStrings = new ArrayList<>();
 
-        File folder = new File(Environment.getExternalStorageDirectory(),"/Documents/ABs/");
+        File folder = new File(getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "ABs");
+
         if (!folder.exists()) {
             folder.mkdir();
         }

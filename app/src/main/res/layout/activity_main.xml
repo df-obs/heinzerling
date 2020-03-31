@@ -26,26 +26,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <AutoCompleteTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/name"
-                android:textSize="20sp"
-                android:id="@+id/main_input_name" />
-
-            <Button
-                android:id="@+id/main_button_save"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/save"
-                android:onClick="setUser"/>
-        </android.support.design.widget.TextInputLayout>
-
         <LinearLayout
             android:id="@+id/main_layout_menu"
             android:layout_width="fill_parent"
@@ -75,6 +55,14 @@
                 android:onClick="openLockedOrders"
                 android:text="@string/button_open_documents"
                 android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/main_button_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/change_user"
+                android:onClick="changeUser"/>
         </LinearLayout>
 
     </LinearLayout>

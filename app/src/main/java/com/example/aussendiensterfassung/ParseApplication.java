@@ -33,12 +33,12 @@ public class ParseApplication extends Application {
                     public void done(List<ParseObject> resultList, ParseException e) {
                         if (e == null) {
                             Log.i("Pin Data", "Established connection, will now refresh data.");
+                            try {
+                                ParseObject.unpinAll();
+                            } catch (ParseException ex) {
+                                ex.printStackTrace();
+                            }
                             for (String table : tables) {
-                                try {
-                                    ParseObject.unpinAll();
-                                } catch (ParseException ex) {
-                                    ex.printStackTrace();
-                                }
                                 pinData(table);
                             }
                         } else {
@@ -49,7 +49,7 @@ public class ParseApplication extends Application {
             }
         };
         Timer timer = new Timer();
-        timer.schedule(fetchOfflineData,0, 10000);
+        timer.schedule(fetchOfflineData,0, 5000);
     }
 
     public void pinData(final String table) {

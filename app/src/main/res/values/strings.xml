@@ -80,4 +80,10 @@
     <string name="creating_pdf">Generiere PDF…</string>
     <string name="creating_finished">Der Vorgang wurde erfolgreich abgeschlossen.</string>
     <string name="saved">Erfolgreich gespeichert!</string>
+    <string name="user_connection_needed">Zum Benutzerwechsel wird eine Online-Verbindung benötigt! Es konnten keine Daten geladen werden.</string>
+    <string name="user_no_connection">Keine Online-Verbindung!</string>
+    <string name="change_user">Benutzer wechseln</string>
+    <string name="no_user_selected">Kein Benutzer ausgewählt!</string>
+    <string name="selected_user">Ausgewählter Benutzer</string>
+    <string name="back">Zurück</string>
 </resources>
