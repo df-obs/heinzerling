@@ -1,12 +1,15 @@
 package com.example.aussendiensterfassung;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,6 +22,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class OrderCalendar extends AppCompatActivity {
+
+    ParseObject userObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,20 +64,38 @@ public class OrderCalendar extends AppCompatActivity {
         TextView viewHeadline = findViewById(R.id.calendar_headline);
         viewHeadline.setText(String.format("%s %s", getString(R.string.orders_at), strToday));
 
-        // Get orders
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Auftrag");
-        query.fromLocalDatastore();
-        query.whereGreaterThanOrEqualTo("Datum", today);
-        query.whereLessThanOrEqualTo("Datum", tomorrow);
-        query.orderByAscending("Datum");
-        query.include("Kunde");
-
-        query.findInBackground(new FindCallback<ParseObject>() {
+        // Get user
+        final SharedPreferences pref = getSharedPreferences("CONFIG", 0);
+        String userId = pref.getString("USER", "NOT_FOUND");
+        ParseQuery<ParseObject> queryEmployeeList = ParseQuery.getQuery("Monteur");
+        queryEmployeeList.whereEqualTo("objectId", userId);
+        queryEmployeeList.fromLocalDatastore();
+        queryEmployeeList.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
                 if (e == null) {
-                         showOrders(resultList);
-                } else {
-                    Log.d("Calendar orders", "Error: " + e.getMessage());
+                    if (resultList.size() > 0) {
+                        ParseObject employee = resultList.get(0);
+                        userObject = employee;
+
+                        // Get orders
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("Auftrag");
+                        query.fromLocalDatastore();
+                        query.whereGreaterThanOrEqualTo("Datum", today);
+                        query.whereLessThanOrEqualTo("Datum", tomorrow);
+                        query.whereEqualTo("Monteur", employee);
+                        query.orderByAscending("Datum");
+                        query.include("Kunde");
+
+                        query.findInBackground(new FindCallback<ParseObject>() {
+                            public void done(List<ParseObject> resultList, ParseException e) {
+                                if (e == null) {
+                                    showOrders(resultList);
+                                } else {
+                                    Log.d("Calendar orders", "Error: " + e.getMessage());
+                                }
+                            }
+                        });
+                    }
                 }
             }
         });
