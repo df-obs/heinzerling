@@ -58,6 +58,7 @@ public class OrderDetails extends AppCompatActivity {
 
                         String valueElevatorId        = Objects.requireNonNull(orderElevator.getParseObject("Aufzug")).getString("Nummer");
                         String valueOrderId           = String.valueOf(orderElevator.getInt("Nummer"));
+                        String valueOrderType         = orderElevator.getString("Typ");
                         final String elevatorObjectId = orderElevator.getObjectId();
 
                         boolean orderLocked = orderElevator.getBoolean("Gesperrt");
@@ -66,8 +67,7 @@ public class OrderDetails extends AppCompatActivity {
 
                         buttonElevator.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 2));
                         buttonElevator.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-                        buttonElevator.setText(String.format("%s: %s\n%s: %s", getString(R.string.elevator_id), valueElevatorId, getString(R.string.order_id), valueOrderId));
-
+                        buttonElevator.setText(String.format("%s: %s\n%s: %s\n%s", getString(R.string.elevator_id), valueElevatorId, getString(R.string.order_id), valueOrderType));
 
                         if (orderLocked) {
                             buttonElevator.setOnClickListener(new View.OnClickListener() {

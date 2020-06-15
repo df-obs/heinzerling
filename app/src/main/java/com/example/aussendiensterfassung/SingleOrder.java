@@ -180,6 +180,9 @@ public class SingleOrder extends AppCompatActivity {
                     String valueElevatorStreet = Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getString("Strasse");
                     String valueElevatorCity = Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getString("PLZ") + " " + Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getString("Ort");
                     String valueKeySafe = Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getString("Schluesseldepot");
+                    if (valueKeySafe == null || valueKeySafe.equals("") || valueKeySafe.equals(" ")) {
+                        valueKeySafe = getString(R.string.not_known);
+                    }
                     Date valueLastMaintenance = Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getDate("LetzteWartung");
                     String valueStrLastMaintenance = getString(R.string.not_known);
                     if (valueLastMaintenance != null) {

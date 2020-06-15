@@ -8,14 +8,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.prolificinteractive.materialcalendarview.*;
 import com.parse.*;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -76,16 +75,34 @@ public class OrderCalendar extends AppCompatActivity {
                     if (resultList.size() > 0) {
                         ParseObject employee = resultList.get(0);
                         userObject = employee;
+                        List <ParseObject> tempList;
+                        ArrayList<String> possibleOrders = new ArrayList<>();
 
-                        // Get orders
+                        // Get possible orders
+                        ParseQuery<ParseObject> innerQuery = ParseQuery.getQuery("MonteurAuftrag");
+                        innerQuery.whereEqualTo("Monteur", employee);
+                        innerQuery.include("Auftrag");
+                        innerQuery.include("Auftrag.Gesamtauftrag");
+                        innerQuery.fromLocalDatastore();
+                        try {
+                             tempList = innerQuery.find();
+                             for (int i = 0; i < tempList.size(); i++) {
+                                 ParseObject possibleCombination = tempList.get(i);
+                                 String possibleOrder = Objects.requireNonNull(Objects.requireNonNull(possibleCombination.getParseObject("Auftrag")).getParseObject("Gesamtauftrag")).getObjectId();
+                                 possibleOrders.add(possibleOrder);
+                             }
+                        } catch (ParseException ex) {
+                            ex.printStackTrace();
+                        }
+
+                        // Get filtered and sorted orders
                         ParseQuery<ParseObject> query = ParseQuery.getQuery("Auftrag");
                         query.fromLocalDatastore();
+                        query.include("Kunde");
+                        query.whereContainedIn("objectId", possibleOrders);
                         query.whereGreaterThanOrEqualTo("Datum", today);
                         query.whereLessThanOrEqualTo("Datum", tomorrow);
-                        query.whereEqualTo("Monteur", employee);
                         query.orderByAscending("Datum");
-                        query.include("Kunde");
-
                         query.findInBackground(new FindCallback<ParseObject>() {
                             public void done(List<ParseObject> resultList, ParseException e) {
                                 if (e == null) {
@@ -113,7 +130,6 @@ public class OrderCalendar extends AppCompatActivity {
             ParseObject order = resultList.get(i);
             Date date = order.getDate("Datum");
             String customer = Objects.requireNonNull(order.getParseObject("Kunde")).getString("Name");
-            String type = order.getString("Typ");
             final String orderObjectId = order.getObjectId();
 
             DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
@@ -123,7 +139,7 @@ public class OrderCalendar extends AppCompatActivity {
             Button buttonOrder = new Button(this);
             buttonOrder.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 2));
             buttonOrder.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-            buttonOrder.setText(String.format("%s\n%s\n%s %s", customer, type, strTime, getString(R.string.clock)));
+            buttonOrder.setText(String.format("%s\n%s %s", customer, strTime, getString(R.string.clock)));
             buttonOrder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -133,20 +149,10 @@ public class OrderCalendar extends AppCompatActivity {
                 }
             });
 
-            // Change colour according to order type
-            if (type != null) {
-                switch (type) {
-                    case "Wartung":
-                        buttonOrder.setBackgroundColor(0xFF4CAF50);
-                        break;
-                    case "Festpreis":
-                        buttonOrder.setBackgroundColor(0xFF2196F3);
-                        break;
-                    case "Störung":
-                        buttonOrder.setBackgroundColor(0xFFFF5722);
-                        break;
-                }
-            }
+            if (i%2 == 0) {
+                buttonOrder.setBackgroundColor(0xFF80D8FF);
+            } else
+                buttonOrder.setBackgroundColor(0xFF82B1FF);
 
             layout.addView(buttonOrder);
         }

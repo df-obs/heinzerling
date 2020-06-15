@@ -336,6 +336,9 @@ public class SignOrder extends AppCompatActivity {
             valueElevatorStreet = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Strasse");
             valueElevatorCity = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("PLZ") + " " + Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Ort");
             valueKeySafe = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Schluesseldepot");
+            if (valueKeySafe == null || valueKeySafe.equals("") || valueKeySafe.equals(" ")) {
+                valueKeySafe = getString(R.string.not_known);
+            }
             valueWork = finalOrder.getString("Arbeiten");
             valueRemarks = finalOrder.getString("Bemerkungen");
             valueUpdated = new Date();

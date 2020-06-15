@@ -147,6 +147,9 @@ public class LockedOrders extends AppCompatActivity {
                     String valueElevatorStreet = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Strasse");
                     String valueElevatorCity = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("PLZ") + " " + Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Ort");
                     String valueKeySafe = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Schluesseldepot");
+                    if (valueKeySafe == null || valueKeySafe.equals("") || valueKeySafe.equals(" ")) {
+                        valueKeySafe = getString(R.string.not_known);
+                    }
                     Date valueLastMaintenance = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getDate("LetzteWartung");
                     String valueStrLastMaintenance = getString(R.string.not_known);
                     if (valueLastMaintenance != null) {
