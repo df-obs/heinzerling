@@ -276,39 +276,41 @@ public class SingleOrder extends AppCompatActivity {
 
                         // Get database contents
                         final String name = person.getString("Name");
-                        final int phone = person.getInt("Telefon");
-                        final String strPhone = Integer.toString(phone);
+                        final String strPhone = person.getString("Telefon");
 
-                        // Create new table row
-                        TableRow row = new TableRow(getApplicationContext());
-                        row.setLayoutParams(new TableLayout.LayoutParams( TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT));
-                        row.setGravity(Gravity.CENTER_VERTICAL);
+                        // Check if data is complete
+                        if (name != null && strPhone != null) {
+                            // Create new table row
+                            TableRow row = new TableRow(getApplicationContext());
+                            row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT));
+                            row.setGravity(Gravity.CENTER_VERTICAL);
 
-                        // Print call button
-                        ImageButton callButton = new ImageButton(getApplicationContext());
-                        callButton.setLayoutParams(new TableRow.LayoutParams( TableRow.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
-                        callButton.setImageResource(R.drawable.ic_contact_phone_black_48dp);
-                        row.addView(callButton);
+                            // Print call button
+                            ImageButton callButton = new ImageButton(getApplicationContext());
+                            callButton.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
+                            callButton.setImageResource(R.drawable.ic_contact_phone_black_48dp);
+                            row.addView(callButton);
 
-                        callButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent phoneIntent = new Intent();
-                                phoneIntent.setAction(Intent.ACTION_DIAL);
-                                phoneIntent.setData(Uri.parse("tel:" + strPhone));
-                                startActivity(phoneIntent);
-                            }
-                        });
+                            callButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent phoneIntent = new Intent();
+                                    phoneIntent.setAction(Intent.ACTION_DIAL);
+                                    phoneIntent.setData(Uri.parse("tel:" + strPhone));
+                                    startActivity(phoneIntent);
+                                }
+                            });
 
-                        // Print name and phone number
-                        TextView textDescription = new TextView(getApplicationContext());
-                        textDescription.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-                        textDescription.setTypeface(textDescription.getTypeface(), Typeface.BOLD);
-                        textDescription.setText(String.format("%s\n%s", name, strPhone));
-                        row.addView(textDescription);
+                            // Print name and phone number
+                            TextView textDescription = new TextView(getApplicationContext());
+                            textDescription.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+                            textDescription.setTypeface(textDescription.getTypeface(), Typeface.BOLD);
+                            textDescription.setText(String.format("%s\n%s", name, strPhone));
+                            row.addView(textDescription);
 
-                        // Add row to table
-                        tableContacts.addView(row);
+                            // Add row to table
+                            tableContacts.addView(row);
+                        }
                     }
                 } else {
                     Log.d("Single Order Contact Persons", "Error: " + e.getMessage());
