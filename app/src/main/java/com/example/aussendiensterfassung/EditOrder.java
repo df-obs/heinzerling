@@ -515,10 +515,14 @@ public class EditOrder extends AppCompatActivity {
                     // Convert RTF
                     PlainTextExtractor rtfExtractor = new PlainTextExtractor();
                     try {
-                        if (valueWork.startsWith("{"))
-                            valueWork = rtfExtractor.extract(valueWork, "application/rtf");
-                        if (valueRemarks.startsWith("{"))
-                            valueRemarks = rtfExtractor.extract(valueRemarks, "application/rtf");
+                        if (valueWork != null) {
+                            if (valueWork.startsWith("{"))
+                                valueWork = rtfExtractor.extract(valueWork, "application/rtf");
+                        }
+                        if (valueRemarks != null) {
+                            if (valueRemarks.startsWith("{"))
+                                valueRemarks = rtfExtractor.extract(valueRemarks, "application/rtf");
+                        }
                     } catch (UnsupportedMimeTypeException | PlainTextExtractorException ex) {
                         ex.printStackTrace();
                     }
@@ -731,10 +735,14 @@ public class EditOrder extends AppCompatActivity {
                     // Convert RTF
                     PlainTextExtractor rtfExtractor = new PlainTextExtractor();
                     try {
-                        if (valueWork.startsWith("{"))
-                            valueWork = rtfExtractor.extract(valueWork, "application/rtf");
-                        if (valueRemarks.startsWith("{"))
-                            valueRemarks = rtfExtractor.extract(valueRemarks, "application/rtf");
+                        if (valueWork != null) {
+                            if (valueWork.startsWith("{"))
+                                valueWork = rtfExtractor.extract(valueWork, "application/rtf");
+                        }
+                        if (valueRemarks != null) {
+                            if (valueRemarks.startsWith("{"))
+                                valueRemarks = rtfExtractor.extract(valueRemarks, "application/rtf");
+                        }
                     } catch (UnsupportedMimeTypeException | PlainTextExtractorException ex) {
                         ex.printStackTrace();
                     }
