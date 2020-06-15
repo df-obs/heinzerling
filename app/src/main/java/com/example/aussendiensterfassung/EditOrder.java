@@ -26,6 +26,9 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.trick2live.parser.rtf.exception.PlainTextExtractorException;
+import com.trick2live.parser.rtf.exception.UnsupportedMimeTypeException;
+import com.trick2live.parser.rtf.parser.PlainTextExtractor;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -509,6 +512,17 @@ public class EditOrder extends AppCompatActivity {
                     String valueRemarks   = orderObject.getString("Bemerkungen");
                     boolean valueFinished = orderObject.getBoolean("Abgeschlossen");
 
+                    // Convert RTF
+                    PlainTextExtractor rtfExtractor = new PlainTextExtractor();
+                    try {
+                        if (valueWork.startsWith("{"))
+                            valueWork = rtfExtractor.extract(valueWork, "application/rtf");
+                        if (valueRemarks.startsWith("{"))
+                            valueRemarks = rtfExtractor.extract(valueRemarks, "application/rtf");
+                    } catch (UnsupportedMimeTypeException | PlainTextExtractorException ex) {
+                        ex.printStackTrace();
+                    }
+
                     // Set field contents
                     fieldWork.setText(valueWork);
                     fieldRemarks.setText(valueRemarks);
@@ -713,6 +727,17 @@ public class EditOrder extends AppCompatActivity {
                     String valueStrLastMaintenance = dateFormat.format(valueLastMaintenance);
                     String valueWork = finalOrder.getString("Arbeiten");
                     String valueRemarks = finalOrder.getString("Bemerkungen");
+
+                    // Convert RTF
+                    PlainTextExtractor rtfExtractor = new PlainTextExtractor();
+                    try {
+                        if (valueWork.startsWith("{"))
+                            valueWork = rtfExtractor.extract(valueWork, "application/rtf");
+                        if (valueRemarks.startsWith("{"))
+                            valueRemarks = rtfExtractor.extract(valueRemarks, "application/rtf");
+                    } catch (UnsupportedMimeTypeException | PlainTextExtractorException ex) {
+                        ex.printStackTrace();
+                    }
 
                     // Print headline
                     TextView textHeadline = findViewById(R.id.edit_order_overview_headline);

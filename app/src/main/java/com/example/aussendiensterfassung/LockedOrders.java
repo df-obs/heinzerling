@@ -20,6 +20,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.parse.*;
+import com.trick2live.parser.rtf.exception.PlainTextExtractorException;
+import com.trick2live.parser.rtf.exception.UnsupportedMimeTypeException;
+import com.trick2live.parser.rtf.parser.PlainTextExtractor;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -151,6 +154,17 @@ public class LockedOrders extends AppCompatActivity {
                     Date valueUpdated = finalOrder.getUpdatedAt();
                     boolean valueShowTimestamp = finalOrder.getBoolean("Zeitstempel");
                     String valueStrUpdated = timeFormat.format(valueUpdated);
+
+                    // Convert RTF
+                    PlainTextExtractor rtfExtractor = new PlainTextExtractor();
+                    try {
+                        if (valueWork.startsWith("{"))
+                            valueWork = rtfExtractor.extract(valueWork, "application/rtf");
+                        if (valueRemarks.startsWith("{"))
+                            valueRemarks = rtfExtractor.extract(valueRemarks, "application/rtf");
+                    } catch (UnsupportedMimeTypeException | PlainTextExtractorException ex) {
+                        ex.printStackTrace();
+                    }
 
                     // Get and print images (signatures)
                     String stringSignatureEmployee = finalOrder.getString("Unterschrift_Monteur");

@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -22,6 +23,9 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.trick2live.parser.rtf.exception.PlainTextExtractorException;
+import com.trick2live.parser.rtf.exception.UnsupportedMimeTypeException;
+import com.trick2live.parser.rtf.parser.PlainTextExtractor;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -31,7 +35,7 @@ import java.util.Objects;
 
 public class SingleOrder extends AppCompatActivity {
 
-    protected LinearLayout layoutOverview;
+    protected ScrollView layoutOverview;
     protected LinearLayout layoutContacts;
     protected BottomNavigationView navView;
     protected String objectAdress;
@@ -179,6 +183,19 @@ public class SingleOrder extends AppCompatActivity {
                     Date valueLastMaintenance = Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getDate("LetzteWartung");
                     String valueStrLastMaintenance = dateFormat.format(valueLastMaintenance);
                     ParseObject objectCustomer = Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getParseObject("Kunde");
+                    String valueWork = singleOrder.getString("Arbeiten");
+                    String valueRemarks = singleOrder.getString("Bemerkungen");
+
+                    // Convert RTF
+                    PlainTextExtractor rtfExtractor = new PlainTextExtractor();
+                    try {
+                        if (valueWork.startsWith("{"))
+                            valueWork = rtfExtractor.extract(valueWork, "application/rtf");
+                        if (valueRemarks.startsWith("{"))
+                            valueRemarks = rtfExtractor.extract(valueRemarks, "application/rtf");
+                    } catch (UnsupportedMimeTypeException | PlainTextExtractorException ex) {
+                        ex.printStackTrace();
+                    }
 
                     // Print headline
                     TextView textHeadline = findViewById(R.id.single_order_overview_headline);
@@ -195,6 +212,34 @@ public class SingleOrder extends AppCompatActivity {
                     // Print data of last maintenance
                     TextView viewLastMaintenance = findViewById(R.id.single_order_overview_text_last_maintenance);
                     viewLastMaintenance.setText(String.format("\n%s: %s", getString(R.string.last_maintenance), valueStrLastMaintenance));
+
+                    // Print work
+                    TextView viewWork = findViewById(R.id.single_order_overview_text_work);
+                    if (valueWork != null) {
+                        if (!valueWork.matches("")) {
+                            viewWork.setVisibility(View.VISIBLE);
+                            viewWork.setText(String.format("\n%s: %s\n", getString(R.string.performed_work), valueWork));
+                        } else {
+                            viewWork.setVisibility(View.GONE);
+                        }
+                    } else {
+                        viewWork.setVisibility(View.GONE);
+                    }
+
+                    // Print remarks
+                    TextView viewRemarks = findViewById(R.id.single_order_overview_text_remarks);
+                    if (valueRemarks != null) {
+                        if (!valueRemarks.matches("")) {
+                            viewRemarks.setVisibility(View.VISIBLE);
+                            viewRemarks.setText(String.format("\n%s: %s\n\n\n\n", getString(R.string.remarks), valueRemarks));
+                        } else {
+                            viewRemarks.setVisibility(View.VISIBLE);
+                            viewRemarks.setText("\n");
+                        }
+                    } else {
+                        viewRemarks.setVisibility(View.VISIBLE);
+                        viewRemarks.setText("\n");
+                    }
 
                     // Set Google Maps link
                     objectAdress = valueElevatorStreet + " " + valueElevatorCity;

@@ -19,86 +19,103 @@
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
-    <LinearLayout
-        android:id="@+id/single_order_layout_overview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:padding="8pt"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/single_order_layout_overview">
 
-        <ImageView
-            android:id="@+id/single_order_overview_logo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/company_name"
-            app:srcCompat="@drawable/heinzerling" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:padding="8pt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/single_order_overview_headline"
-            android:layout_width="match_parent"
-            android:layout_height="24pt"
-            android:layout_marginTop="2pt"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/single_order_overview_text_data"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp" />
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/single_order_overview_table_material">
-
-            <TableRow
+            <ImageView
+                android:id="@+id/single_order_overview_logo"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:ignore="UselessParent">
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/company_name"
+                app:srcCompat="@drawable/heinzerling" />
 
-                <TextView
-                    android:id="@+id/single_order_overview_text_pos_material"
-                    android:layout_width="18pt"
-                    android:layout_height="wrap_content"
-                    android:text="@string/position_short"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/single_order_overview_headline"
+                android:layout_width="match_parent"
+                android:layout_height="24pt"
+                android:layout_marginTop="2pt"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/single_order_overview_text_qty_material"
-                    android:layout_width="28pt"
-                    android:layout_height="wrap_content"
-                    android:text="@string/quantity"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/single_order_overview_text_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/single_order_overview_text_unit_material"
-                    android:layout_width="28pt"
-                    android:layout_height="wrap_content"
-                    android:text="@string/unit"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/single_order_overview_table_material">
 
-                <TextView
-                    android:id="@+id/single_order_overview_text_name_material"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/description"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </TableRow>
-        </TableLayout>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:ignore="UselessParent">
 
-        <TextView
-            android:id="@+id/single_order_overview_text_last_maintenance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp" />
-    </LinearLayout>
+                    <TextView
+                        android:id="@+id/single_order_overview_text_pos_material"
+                        android:layout_width="18pt"
+                        android:layout_height="wrap_content"
+                        android:text="@string/position_short"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/single_order_overview_text_qty_material"
+                        android:layout_width="28pt"
+                        android:layout_height="wrap_content"
+                        android:text="@string/quantity"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/single_order_overview_text_unit_material"
+                        android:layout_width="28pt"
+                        android:layout_height="wrap_content"
+                        android:text="@string/unit"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/single_order_overview_text_name_material"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/description"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/single_order_overview_text_last_maintenance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/single_order_overview_text_work"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/single_order_overview_text_remarks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/single_order_layout_contacts"
