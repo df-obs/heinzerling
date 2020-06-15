@@ -332,7 +332,7 @@ public class SignOrder extends AppCompatActivity {
             valueCustomerId = Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getInt("Kundennummer");
             valueCustomerStreet = Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("Strasse");
             valueCustomerCity = Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("PLZ") + " " + Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("Ort");
-            valueElevatorId = Integer.toString(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getInt("Nummer"));
+            valueElevatorId = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Nummer");
             valueElevatorStreet = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Strasse");
             valueElevatorCity = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("PLZ") + " " + Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Ort");
             valueKeySafe = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Schluesseldepot");

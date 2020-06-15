@@ -723,7 +723,7 @@ public class EditOrder extends AppCompatActivity {
                     String valueCustomer = Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("Name");
                     String valueCustomerStreet = Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("Strasse");
                     String valueCustomerCity = Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("PLZ") + " " + Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("Ort");
-                    String valueElevatorId = Integer.toString(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getInt("Nummer"));
+                    String valueElevatorId = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Nummer");
                     String valueElevatorStreet = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Strasse");
                     String valueElevatorCity = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("PLZ") + " " + Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Ort");
                     String valueKeySafe = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Schluesseldepot");

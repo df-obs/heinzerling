@@ -56,7 +56,7 @@ public class OrderDetails extends AppCompatActivity {
                     for (int i=0; i<resultList.size(); i++) {
                         ParseObject orderElevator = resultList.get(i);
 
-                        String valueElevatorId        = String.valueOf(Objects.requireNonNull(orderElevator.getParseObject("Aufzug")).getInt("Nummer"));
+                        String valueElevatorId        = Objects.requireNonNull(orderElevator.getParseObject("Aufzug")).getString("Nummer");
                         String valueOrderId           = String.valueOf(orderElevator.getInt("Nummer"));
                         final String elevatorObjectId = orderElevator.getObjectId();
 
