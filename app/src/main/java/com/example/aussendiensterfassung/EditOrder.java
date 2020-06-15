@@ -728,7 +728,10 @@ public class EditOrder extends AppCompatActivity {
                     String valueElevatorCity = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("PLZ") + " " + Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Ort");
                     String valueKeySafe = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Schluesseldepot");
                     Date valueLastMaintenance = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getDate("LetzteWartung");
-                    String valueStrLastMaintenance = dateFormat.format(valueLastMaintenance);
+                    String valueStrLastMaintenance = getString(R.string.not_known);
+                    if (valueLastMaintenance != null) {
+                        valueStrLastMaintenance = dateFormat.format(valueLastMaintenance);
+                    }
                     String valueWork = finalOrder.getString("Arbeiten");
                     String valueRemarks = finalOrder.getString("Bemerkungen");
 

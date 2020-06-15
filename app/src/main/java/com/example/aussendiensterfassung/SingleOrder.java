@@ -181,7 +181,10 @@ public class SingleOrder extends AppCompatActivity {
                     String valueElevatorCity = Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getString("PLZ") + " " + Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getString("Ort");
                     String valueKeySafe = Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getString("Schluesseldepot");
                     Date valueLastMaintenance = Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getDate("LetzteWartung");
-                    String valueStrLastMaintenance = dateFormat.format(valueLastMaintenance);
+                    String valueStrLastMaintenance = getString(R.string.not_known);
+                    if (valueLastMaintenance != null) {
+                        valueStrLastMaintenance = dateFormat.format(valueLastMaintenance);
+                    }
                     ParseObject objectCustomer = Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getParseObject("Kunde");
                     String valueWork = singleOrder.getString("Arbeiten");
                     String valueRemarks = singleOrder.getString("Bemerkungen");

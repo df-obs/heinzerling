@@ -86,4 +86,5 @@
     <string name="no_user_selected">Kein Benutzer ausgewählt!</string>
     <string name="selected_user">Ausgewählter Benutzer</string>
     <string name="back">Zurück</string>
+    <string name="not_known">n.b.</string>
 </resources>
