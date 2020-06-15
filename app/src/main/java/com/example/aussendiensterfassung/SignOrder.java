@@ -23,6 +23,9 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.trick2live.parser.rtf.exception.PlainTextExtractorException;
+import com.trick2live.parser.rtf.exception.UnsupportedMimeTypeException;
+import com.trick2live.parser.rtf.parser.PlainTextExtractor;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -328,16 +331,31 @@ public class SignOrder extends AppCompatActivity {
             valueCustomer = Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("Name");
             valueCustomerId = Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getInt("Kundennummer");
             valueCustomerStreet = Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("Strasse");
-            valueCustomerCity = Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getInt("PLZ") + " " + Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("Ort");
+            valueCustomerCity = Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("PLZ") + " " + Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("Ort");
             valueElevatorId = Integer.toString(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getInt("Nummer"));
             valueElevatorStreet = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Strasse");
-            valueElevatorCity = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getInt("PLZ") + " " + Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Ort");
+            valueElevatorCity = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("PLZ") + " " + Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Ort");
             valueKeySafe = Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getString("Schluesseldepot");
             valueWork = finalOrder.getString("Arbeiten");
             valueRemarks = finalOrder.getString("Bemerkungen");
             valueUpdated = new Date();
             valueWorkDone = finalOrder.getBoolean("Abgeschlossen");
             valueStrUpdated = timeFormat.format(valueUpdated);
+
+            // Convert RTF
+            PlainTextExtractor rtfExtractor = new PlainTextExtractor();
+            try {
+                if (valueWork != null) {
+                    if (valueWork.startsWith("{"))
+                        valueWork = rtfExtractor.extract(valueWork, "application/rtf");
+                }
+                if (valueRemarks != null) {
+                    if (valueRemarks.startsWith("{"))
+                        valueRemarks = rtfExtractor.extract(valueRemarks, "application/rtf");
+                }
+            } catch (UnsupportedMimeTypeException | PlainTextExtractorException ex) {
+                ex.printStackTrace();
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
