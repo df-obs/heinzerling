@@ -48,6 +48,7 @@ public class ParseApplication extends Application {
                     public void done(List<ParseObject> resultList, ParseException e) {
                         if (e == null) { // no error -> connection ok
                             Log.i("Pin Data", "Established connection, will now refresh data.");
+                            pref = getSharedPreferences("CONFIG", 0);
                             int syncCounter = pref.getInt("SYNC", 0);
                             if (syncCounter < 5) {
                                 pinData(0, true);
@@ -84,7 +85,6 @@ public class ParseApplication extends Application {
                 lastUpdate.setTime(dateMs);
 
                 ParseQuery<ParseObject> query = ParseQuery.getQuery(tablesList.get(sequence));
-                pref = getSharedPreferences("CONFIG", 0);
                 if (!fullSync) {
                     query.whereGreaterThan("updatedAt", lastUpdate);
                 }
