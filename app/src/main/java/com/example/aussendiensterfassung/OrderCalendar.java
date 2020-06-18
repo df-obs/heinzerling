@@ -75,7 +75,7 @@ public class OrderCalendar extends AppCompatActivity {
                     if (resultList.size() > 0) {
                         ParseObject employee = resultList.get(0);
                         userObject = employee;
-                        String userSql = employee.getString("sqlRef");
+                        final String userSql = employee.getString("sqlRef");
 
                         // Get filtered and sorted orders
                         ParseQuery<ParseObject> query = ParseQuery.getQuery("Auftrag");
@@ -88,7 +88,7 @@ public class OrderCalendar extends AppCompatActivity {
                         query.findInBackground(new FindCallback<ParseObject>() {
                             public void done(List<ParseObject> resultList, ParseException e) {
                                 if (e == null) {
-                                    showOrders(resultList);
+                                    showOrders(resultList, userSql);
                                 } else {
                                     Log.d("Calendar orders", "Error: " + e.getMessage());
                                 }
@@ -101,46 +101,65 @@ public class OrderCalendar extends AppCompatActivity {
     }
 
     // Show orders below calendar
-    public void showOrders(List<ParseObject> resultList) {
+    public void showOrders(List<ParseObject> resultList, String userSql) {
         // Define and clear layout
         LinearLayout layout = findViewById(R.id.calendar_layout);
         layout.removeAllViewsInLayout();
 
+        int counter = 0;
+
         // Get orders and create a button for each order
         for (int i=0; i<resultList.size(); i++) {
-            // Get fields
             ParseObject order = resultList.get(i);
-            Date date = order.getDate("DatumMitUhrzeit");
-            int time = order.getInt("Stunde");
-            String customer = Objects.requireNonNull(order.getParseObject("Kunde")).getString("Name");
-            final String orderObjectId = order.getObjectId();
-            DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
-            String strTime = timeFormat.format(date);
 
-            // Create button
-            Button buttonOrder = new Button(this);
-            buttonOrder.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 2));
-            buttonOrder.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-            if (time == 0) {
-                buttonOrder.setText(customer);
-            } else {
-                buttonOrder.setText(String.format("%s\n%s %s", customer, strTime, getString(R.string.clock)));
-            }
-            buttonOrder.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent switchToOrderDetails = new Intent(getApplicationContext(), OrderDetails.class);
-                    switchToOrderDetails.putExtra("orderObjectId", orderObjectId);
-                    startActivity(switchToOrderDetails);
+            // Check if user is correct
+            String employees = order.getString("Monteure");
+            String[] employeeList = employees.split("; ");
+
+            boolean userCorrect = false;
+
+            for(String employee : employeeList) {
+                if (employee.equals(userSql)) {
+                    userCorrect = true;
                 }
-            });
+            }
 
-            if (i%2 == 0) {
-                buttonOrder.setBackgroundColor(0xFF80D8FF);
-            } else
-                buttonOrder.setBackgroundColor(0xFF82B1FF);
+            if (userCorrect) {
+                // Get fields
+                Date date = order.getDate("DatumMitUhrzeit");
+                int time = order.getInt("Stunde");
+                String customer = Objects.requireNonNull(order.getParseObject("Kunde")).getString("Name");
+                final String orderObjectId = order.getObjectId();
+                DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
+                String strTime = timeFormat.format(date);
 
-            layout.addView(buttonOrder);
+                // Create button
+                Button buttonOrder = new Button(this);
+                buttonOrder.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 2));
+                buttonOrder.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+                if (time == 0) {
+                    buttonOrder.setText(customer);
+                } else {
+                    buttonOrder.setText(String.format("%s\n%s %s", customer, strTime, getString(R.string.clock)));
+                }
+                buttonOrder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent switchToOrderDetails = new Intent(getApplicationContext(), OrderDetails.class);
+                        switchToOrderDetails.putExtra("orderObjectId", orderObjectId);
+                        startActivity(switchToOrderDetails);
+                    }
+                });
+
+                if (counter % 2 == 0) {
+                    buttonOrder.setBackgroundColor(0xFF80D8FF);
+                } else
+                    buttonOrder.setBackgroundColor(0xFF82B1FF);
+
+                counter++;
+
+                layout.addView(buttonOrder);
+            }
         }
     }
 }
