@@ -57,6 +57,7 @@ public class ParseApplication extends Application {
                             syncCounter++;
                             ed = pref.edit();
                             ed.putInt("SYNC", syncCounter);
+                            ed.apply();
                         } else {
                             Log.e("Pin Data", "Error: " + e.getMessage());
                         }
