@@ -36,7 +36,7 @@ public class SelectUser extends AppCompatActivity {
         // Get current user
         pref = getSharedPreferences("CONFIG", 0);
         mUserId = pref.getString("USER", "NOT_FOUND");
-        mUserName = getString(R.string.user_no_connection);
+        mUserName = getString(R.string.no_user_selected);
 
         // Get a list of all employees (= users)
         employeeNameList = new ArrayList<>();
@@ -50,6 +50,7 @@ public class SelectUser extends AppCompatActivity {
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), getString(R.string.user_connection_needed), Toast.LENGTH_SHORT).show();
+                    mUserName = getString(R.string.user_no_connection);
                 }
             }
         });
