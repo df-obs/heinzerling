@@ -110,10 +110,10 @@ public class OrderCalendar extends AppCompatActivity {
         for (int i=0; i<resultList.size(); i++) {
             // Get fields
             ParseObject order = resultList.get(i);
-            Date date = order.getDate("Datum");
+            Date date = order.getDate("DatumMitUhrzeit");
+            int time = order.getInt("Stunde");
             String customer = Objects.requireNonNull(order.getParseObject("Kunde")).getString("Name");
             final String orderObjectId = order.getObjectId();
-
             DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
             String strTime = timeFormat.format(date);
 
@@ -121,7 +121,11 @@ public class OrderCalendar extends AppCompatActivity {
             Button buttonOrder = new Button(this);
             buttonOrder.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 2));
             buttonOrder.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-            buttonOrder.setText(String.format("%s\n%s %s", customer, strTime, getString(R.string.clock)));
+            if (time == 0) {
+                buttonOrder.setText(customer);
+            } else {
+                buttonOrder.setText(String.format("%s\n%s %s", customer, strTime, getString(R.string.clock)));
+            }
             buttonOrder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
