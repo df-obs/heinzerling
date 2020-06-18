@@ -277,6 +277,12 @@ public class LockedOrders extends AppCompatActivity {
                     // Define position table
                     TableLayout tablePositions = findViewById(R.id.locked_orders_details_table_material);
 
+                    if (resultList.size() == 0) {
+                        tablePositions.setVisibility(View.GONE);
+                    } else {
+                        tablePositions.setVisibility(View.VISIBLE);
+                    }
+
                     // Parse and print the single positions
                     for (int i=0; i<resultList.size(); i++) {
                         ParseObject materialPosition = resultList.get(i);
@@ -286,6 +292,10 @@ public class LockedOrders extends AppCompatActivity {
                         double quantity = materialPosition.getDouble("Anzahl");
                         String unit = Objects.requireNonNull(materialPosition.getParseObject("Artikel")).getString("Einheit");
                         String name = Objects.requireNonNull(materialPosition.getParseObject("Artikel")).getString("Name");
+
+                        if (unit == null || unit.equals("") || unit.equals(" ") || unit.equals("null")) {
+                            unit = getString(R.string.pieces_short);
+                        }
 
                         // Create new table row
                         TableRow row = new TableRow(getApplicationContext());

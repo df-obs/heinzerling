@@ -349,7 +349,6 @@ public class EditOrder extends AppCompatActivity {
         ParseQuery<ParseObject> queryOld = ParseQuery.getQuery("MonteurAuftrag");
         queryOld.fromLocalDatastore();
         queryOld.whereEqualTo("Auftrag", order);
-        queryOld.whereEqualTo("Vorgegeben", false);
         queryOld.include("Monteur");
         queryOld.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
@@ -593,6 +592,12 @@ public class EditOrder extends AppCompatActivity {
                     // Define position table
                     TableLayout tablePositions = findViewById(R.id.edit_order_overview_table_material);
 
+                    if (resultList.size() == 0) {
+                        tablePositions.setVisibility(View.GONE);
+                    } else {
+                        tablePositions.setVisibility(View.VISIBLE);
+                    }
+
                     // Parse and print the single positions
                     for (int i=0; i<resultList.size(); i++) {
                         ParseObject materialPosition = resultList.get(i);
@@ -602,6 +607,10 @@ public class EditOrder extends AppCompatActivity {
                         double quantity = materialPosition.getDouble("Anzahl");
                         String unit = Objects.requireNonNull(materialPosition.getParseObject("Artikel")).getString("Einheit");
                         String name = Objects.requireNonNull(materialPosition.getParseObject("Artikel")).getString("Name");
+
+                        if (unit == null || unit.equals("") || unit.equals(" ") || unit.equals("null")) {
+                            unit = getString(R.string.pieces_short);
+                        }
 
                         // Create new table row
                         TableRow row = new TableRow(getApplicationContext());

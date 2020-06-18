@@ -58,29 +58,33 @@ public class ParseApplication extends Application {
         timer.schedule(fetchOfflineData,0, period);
     }
 
-    public void pinData(int sequence) {
-        ArrayList<String> tablesList = new ArrayList<>(Arrays.asList(tables));
+    public void pinData(final int sequence) {
+        new Thread(new Runnable() {
+            public void run() {
+                ArrayList<String> tablesList = new ArrayList<>(Arrays.asList(tables));
 
-        if (sequence > tablesList.size()-1) {
-            return;
-        }
+                if (sequence > tablesList.size()-1) {
+                    return;
+                }
 
-        lastUpdate = new Date();
-        long dateMs = lastUpdate.getTime();
-        dateMs = dateMs - period;
-        lastUpdate.setTime(dateMs);
+                lastUpdate = new Date();
+                long dateMs = lastUpdate.getTime();
+                dateMs = dateMs - period;
+                lastUpdate.setTime(dateMs);
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(tablesList.get(sequence));
-        query.whereGreaterThan("updatedAt", lastUpdate);
-        query.setLimit(5000);
-        try {
-            List<ParseObject> resultList = query.find();
-            ParseObject.pinAllInBackground(tablesList.get(sequence), resultList);
-            Log.i("Pin Data", "Fetched and pinned table " + tablesList.get(sequence));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+                ParseQuery<ParseObject> query = ParseQuery.getQuery(tablesList.get(sequence));
+                query.whereGreaterThan("updatedAt", lastUpdate);
+                query.setLimit(5000);
+                try {
+                    List<ParseObject> resultList = query.find();
+                    ParseObject.pinAllInBackground(tablesList.get(sequence), resultList);
+                    Log.i("Pin Data", "Fetched and pinned table " + tablesList.get(sequence));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
-        pinData(sequence+1);
+                pinData(sequence+1);
+            }
+        }).start();
     }
 }

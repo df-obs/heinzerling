@@ -487,6 +487,9 @@ public class SignOrder extends AppCompatActivity {
 
                     case "Einheit":
                         String unit = Objects.requireNonNull(materialPosition.getParseObject("Artikel")).getString("Einheit");
+                        if (unit == null || unit.equals("") || unit.equals(" ") || unit.equals("null")) {
+                            unit = getString(R.string.pieces_short);
+                        }
                         articleList.add(unit);
                         break;
 
