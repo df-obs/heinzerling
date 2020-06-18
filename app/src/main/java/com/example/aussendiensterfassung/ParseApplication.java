@@ -1,6 +1,7 @@
 package com.example.aussendiensterfassung;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.parse.*;
@@ -12,13 +13,14 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import bolts.Task;
-
 public class ParseApplication extends Application {
 
     String[] tables;
     Date lastUpdate;
     int period;
+
+    SharedPreferences pref;
+    SharedPreferences.Editor ed;
 
     public void onCreate() {
         super.onCreate();
@@ -46,7 +48,15 @@ public class ParseApplication extends Application {
                     public void done(List<ParseObject> resultList, ParseException e) {
                         if (e == null) { // no error -> connection ok
                             Log.i("Pin Data", "Established connection, will now refresh data.");
-                            pinData(0);
+                            int syncCounter = pref.getInt("SYNC", 0);
+                            if (syncCounter < 5) {
+                                pinData(0, true);
+                            } else {
+                                pinData(0, false);
+                            }
+                            syncCounter++;
+                            ed = pref.edit();
+                            ed.putInt("SYNC", syncCounter);
                         } else {
                             Log.e("Pin Data", "Error: " + e.getMessage());
                         }
@@ -58,7 +68,7 @@ public class ParseApplication extends Application {
         timer.schedule(fetchOfflineData,0, period);
     }
 
-    public void pinData(final int sequence) {
+    public void pinData(final int sequence, final boolean fullSync) {
         new Thread(new Runnable() {
             public void run() {
                 ArrayList<String> tablesList = new ArrayList<>(Arrays.asList(tables));
@@ -73,7 +83,10 @@ public class ParseApplication extends Application {
                 lastUpdate.setTime(dateMs);
 
                 ParseQuery<ParseObject> query = ParseQuery.getQuery(tablesList.get(sequence));
-                query.whereGreaterThan("updatedAt", lastUpdate);
+                pref = getSharedPreferences("CONFIG", 0);
+                if (!fullSync) {
+                    query.whereGreaterThan("updatedAt", lastUpdate);
+                }
                 query.setLimit(5000);
                 try {
                     List<ParseObject> resultList = query.find();
@@ -83,7 +96,7 @@ public class ParseApplication extends Application {
                     e.printStackTrace();
                 }
 
-                pinData(sequence+1);
+                pinData(sequence+1, fullSync);
             }
         }).start();
     }
