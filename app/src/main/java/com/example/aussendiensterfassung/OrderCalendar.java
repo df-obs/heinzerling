@@ -75,34 +75,16 @@ public class OrderCalendar extends AppCompatActivity {
                     if (resultList.size() > 0) {
                         ParseObject employee = resultList.get(0);
                         userObject = employee;
-                        List <ParseObject> tempList;
-                        ArrayList<String> possibleOrders = new ArrayList<>();
-
-                        // Get possible orders
-                        ParseQuery<ParseObject> innerQuery = ParseQuery.getQuery("MonteurAuftrag");
-                        innerQuery.whereEqualTo("Monteur", employee);
-                        innerQuery.include("Auftrag");
-                        innerQuery.include("Auftrag.Gesamtauftrag");
-                        innerQuery.fromLocalDatastore();
-                        try {
-                             tempList = innerQuery.find();
-                             for (int i = 0; i < tempList.size(); i++) {
-                                 ParseObject possibleCombination = tempList.get(i);
-                                 String possibleOrder = Objects.requireNonNull(Objects.requireNonNull(possibleCombination.getParseObject("Auftrag")).getParseObject("Gesamtauftrag")).getObjectId();
-                                 possibleOrders.add(possibleOrder);
-                             }
-                        } catch (ParseException ex) {
-                            ex.printStackTrace();
-                        }
+                        String userSql = employee.getString("sqlRef");
 
                         // Get filtered and sorted orders
                         ParseQuery<ParseObject> query = ParseQuery.getQuery("Auftrag");
                         query.fromLocalDatastore();
                         query.include("Kunde");
-                        query.whereContainedIn("objectId", possibleOrders);
-                        query.whereGreaterThanOrEqualTo("Datum", today);
-                        query.whereLessThanOrEqualTo("Datum", tomorrow);
-                        query.orderByAscending("Datum");
+                        query.whereContains("Monteure", userSql);
+                        query.whereGreaterThanOrEqualTo("DatumMitUhrzeit", today);
+                        query.whereLessThanOrEqualTo("DatumMitUhrzeit", tomorrow);
+                        query.orderByAscending("DatumMitUhrzeit");
                         query.findInBackground(new FindCallback<ParseObject>() {
                             public void done(List<ParseObject> resultList, ParseException e) {
                                 if (e == null) {

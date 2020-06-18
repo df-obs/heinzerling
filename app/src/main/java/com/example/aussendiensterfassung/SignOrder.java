@@ -326,7 +326,7 @@ public class SignOrder extends AppCompatActivity {
             // Get and parse database contents
             valueOrderId = finalOrder.getInt("Nummer");
             valueDate = Objects.requireNonNull(finalOrder.getParseObject("Gesamtauftrag")).getDate("Datum");
-            valueOrderType = Objects.requireNonNull(finalOrder.getParseObject("Gesamtauftrag")).getString("Typ");
+            valueOrderType = Objects.requireNonNull(finalOrder.getString("Typ"));
             valueStrDate = dateFormat.format(valueDate);
             valueCustomer = Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("Name");
             valueCustomerId = Objects.requireNonNull(Objects.requireNonNull(finalOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getInt("Kundennummer");

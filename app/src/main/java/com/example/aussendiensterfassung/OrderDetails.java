@@ -67,7 +67,7 @@ public class OrderDetails extends AppCompatActivity {
 
                         buttonElevator.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 2));
                         buttonElevator.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-                        buttonElevator.setText(String.format("%s: %s\n%s: %s\n%s", getString(R.string.elevator_id), valueElevatorId, getString(R.string.order_id), valueOrderType));
+                        buttonElevator.setText(String.format("%s: %s\n%s: %s\n%s", getString(R.string.elevator_id), valueElevatorId, getString(R.string.order_id), valueOrderId, valueOrderType));
 
                         if (orderLocked) {
                             buttonElevator.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +133,7 @@ public class OrderDetails extends AppCompatActivity {
                 if (e == null) {
                     TextView textHeadline = findViewById(R.id.order_details_headline);
                     ParseObject order = resultList.get(0);
-                    textHeadline.setText(String.format("%s\n%s", order.get("Typ"), Objects.requireNonNull(order.getParseObject("Kunde")).getString("Name")));
+                    textHeadline.setText(Objects.requireNonNull(order.getParseObject("Kunde")).getString("Name"));
                 } else {
                     Log.d("Order Details", "Error: " + e.getMessage());
                 }

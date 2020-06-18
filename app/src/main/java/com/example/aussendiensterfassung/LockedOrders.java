@@ -54,59 +54,70 @@ public class LockedOrders extends AppCompatActivity {
         // Get user
         final SharedPreferences pref = getSharedPreferences("CONFIG", 0);
         final String userId = pref.getString("USER", "NOT_FOUND");
-
-        // Get all locked (= signed) orders
-        ParseQuery<ParseObject> orderQuery = ParseQuery.getQuery("Einzelauftrag");
-        orderQuery.fromLocalDatastore();
-        orderQuery.whereEqualTo("Gesperrt", true);
-        orderQuery.include("Gesamtauftrag");
-        orderQuery.include("Gesamtauftrag.Kunde");
-        orderQuery.include("Gesamtauftrag.Monteur");
-        orderQuery.orderByDescending("updatedAt");
-        orderQuery.findInBackground(new FindCallback<ParseObject>() {
+        ParseQuery<ParseObject> queryEmployeeList = ParseQuery.getQuery("Monteur");
+        queryEmployeeList.whereEqualTo("objectId", userId);
+        queryEmployeeList.fromLocalDatastore();
+        queryEmployeeList.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
                 if (e == null) {
-                    int count = 0;
+                    if (resultList.size() > 0) {
+                        ParseObject employee = resultList.get(0);
+                        final ParseObject userObject = employee;
+                        String userSql = employee.getString("sqlRef");
 
-                    // Clear view
-                    layoutOrders.removeAllViewsInLayout();
+                        // Get all locked (= signed) orders
+                        ParseQuery<ParseObject> orderQuery = ParseQuery.getQuery("Einzelauftrag");
+                        orderQuery.fromLocalDatastore();
+                        orderQuery.whereEqualTo("Gesperrt", true);
+                        orderQuery.whereContains("Monteure", userSql);
+                        orderQuery.include("Gesamtauftrag");
+                        orderQuery.include("Gesamtauftrag.Kunde");
+                        orderQuery.orderByDescending("updatedAt");
+                        orderQuery.findInBackground(new FindCallback<ParseObject>() {
+                            public void done(List<ParseObject> resultList, ParseException e) {
+                                if (e == null) {
+                                    int count = 0;
 
-                    // Create a button for every order
-                    for (int i=0; i<resultList.size(); i++) {
-                        ParseObject order = resultList.get(i);
+                                    // Clear view
+                                    layoutOrders.removeAllViewsInLayout();
 
-                        // Only show orders related to user
-                        if (Objects.requireNonNull(Objects.requireNonNull(order.getParseObject("Gesamtauftrag")).getParseObject("Monteur")).getObjectId().equals(userId)) {
-                            // Get order data
-                            final String valueOrderId = String.valueOf(order.getInt("Nummer"));
-                            final String valueObjectId = order.getObjectId();
-                            final String valueCustomer = Objects.requireNonNull(Objects.requireNonNull(order.getParseObject("Gesamtauftrag")).getParseObject("Kunde")).getString("Name");
+                                    // Create a button for every order
+                                    for (int i=0; i<resultList.size(); i++) {
+                                        ParseObject order = resultList.get(i);
 
-                            // Create and style button
-                            Button buttonOrder = new Button(getApplicationContext());
-                            buttonOrder.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 2));
-                            buttonOrder.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-                            buttonOrder.setText(String.format("%s: %s\n%s", getString(R.string.order_id), valueOrderId, valueCustomer));
-                            buttonOrder.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    showLockedOrder(valueObjectId);
+                                        // Get order data
+                                        final String valueOrderId = String.valueOf(order.getInt("Nummer"));
+                                        final String valueObjectId = order.getObjectId();
+                                        final String valueCustomer = Objects.requireNonNull(Objects.requireNonNull(order.getParseObject("Gesamtauftrag")).getParseObject("Kunde")).getString("Name");
+
+                                        // Create and style button
+                                        Button buttonOrder = new Button(getApplicationContext());
+                                        buttonOrder.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 2));
+                                        buttonOrder.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+                                        buttonOrder.setText(String.format("%s: %s\n%s", getString(R.string.order_id), valueOrderId, valueCustomer));
+                                        buttonOrder.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                showLockedOrder(valueObjectId);
+                                            }
+                                        });
+
+                                        if (count % 2 == 0) {
+                                            buttonOrder.setBackgroundColor(0xFF80D8FF);
+                                        } else {
+                                            buttonOrder.setBackgroundColor(0xFF82B1FF);
+                                        }
+
+                                        count++;
+
+                                        layoutOrders.addView(buttonOrder);
+                                    }
+                                } else {
+                                    Log.d("Locked Orders", "Error: " + e.getMessage());
                                 }
-                            });
-
-                            if (count % 2 == 0) {
-                                buttonOrder.setBackgroundColor(0xFF80D8FF);
-                            } else {
-                                buttonOrder.setBackgroundColor(0xFF82B1FF);
                             }
-
-                            count++;
-
-                            layoutOrders.addView(buttonOrder);
-                        }
+                        });
                     }
-                } else {
-                    Log.d("Locked Orders", "Error: " + e.getMessage());
                 }
             }
         });
