@@ -90,9 +90,11 @@ public class OrderDetails extends AppCompatActivity {
                             });
                         }
 
-                        if (i%2 == 0) {
+                        if (valueOrderType.equals("STÖRUNG"))
+                            buttonElevator.setBackgroundColor(0xFFF44336);
+                        else if (i%2 == 0)
                             buttonElevator.setBackgroundColor(0xFF80D8FF);
-                        } else
+                        else
                             buttonElevator.setBackgroundColor(0xFF82B1FF);
 
                         layoutElevators.addView(buttonElevator);

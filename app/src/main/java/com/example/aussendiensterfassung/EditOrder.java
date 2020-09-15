@@ -41,10 +41,10 @@ import static android.view.View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION;
 
 public class EditOrder extends AppCompatActivity {
 
-    LinearLayout layoutMaterial;
-    LinearLayout layoutMechanics;
-    LinearLayout layoutServices;
-    ScrollView layoutOverview;
+    View layoutMaterial;
+    View layoutMechanics;
+    View layoutServices;
+    View layoutOverview;
     BottomNavigationView navView;
 
     ParseObject order;
@@ -349,6 +349,7 @@ public class EditOrder extends AppCompatActivity {
         ParseQuery<ParseObject> queryOld = ParseQuery.getQuery("MonteurAuftrag");
         queryOld.fromLocalDatastore();
         queryOld.whereEqualTo("Auftrag", order);
+        queryOld.whereNotEqualTo("Vorgegeben", true);
         queryOld.include("Monteur");
         queryOld.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
@@ -405,7 +406,7 @@ public class EditOrder extends AppCompatActivity {
         ParseQuery<ParseObject> queryOld = ParseQuery.getQuery("MonteurAuftrag");
         queryOld.fromLocalDatastore();
         queryOld.whereEqualTo("Auftrag", order);
-        queryOld.whereEqualTo("Vorgegeben", false);
+        queryOld.whereNotEqualTo("Vorgegeben", true);
         queryOld.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
                 if (e == null) {
@@ -655,6 +656,7 @@ public class EditOrder extends AppCompatActivity {
         ParseQuery<ParseObject> queryMechanics = ParseQuery.getQuery("MonteurAuftrag");
         queryMechanics.fromLocalDatastore();
         queryMechanics.whereEqualTo("Auftrag", order);
+        queryMechanics.whereGreaterThan("Stunden", 0);
         queryMechanics.include("Monteur");
         queryMechanics.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {

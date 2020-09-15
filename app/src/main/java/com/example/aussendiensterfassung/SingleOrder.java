@@ -186,6 +186,7 @@ public class SingleOrder extends AppCompatActivity {
                     String valueCustomer = Objects.requireNonNull(Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("Name");
                     String valueCustomerStreet = Objects.requireNonNull(Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("Strasse");
                     String valueCustomerCity = Objects.requireNonNull(Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("PLZ") + " " + Objects.requireNonNull(Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getParseObject("Kunde")).getString("Ort");
+                    ParseObject valueElevatorObject = singleOrder.getParseObject("Aufzug");
                     String valueElevatorId = Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getString("Nummer");
                     String valueElevatorStreet = Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getString("Strasse");
                     String valueElevatorCity = Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getString("PLZ") + " " + Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getString("Ort");
@@ -198,7 +199,6 @@ public class SingleOrder extends AppCompatActivity {
                     if (valueLastMaintenance != null) {
                         valueStrLastMaintenance = dateFormat.format(valueLastMaintenance);
                     }
-                    ParseObject objectCustomer = Objects.requireNonNull(singleOrder.getParseObject("Aufzug")).getParseObject("Kunde");
                     String valueWork = singleOrder.getString("Arbeiten");
                     String valueRemarks = singleOrder.getString("Bemerkungen");
 
@@ -267,7 +267,7 @@ public class SingleOrder extends AppCompatActivity {
                     objectAdress = "https://www.google.com/maps/dir/?api=1&destination=" + objectAdress;
 
                     // Get contact persons
-                    getContacts(objectCustomer);
+                    getContacts(valueElevatorObject);
                 } else {
                     Log.d("Single Order", "Error: " + e.getMessage());
                 }
@@ -276,10 +276,10 @@ public class SingleOrder extends AppCompatActivity {
     }
 
     // Get contact persons for the customer who owns the elevator
-    protected void getContacts(ParseObject customer) {
+    protected void getContacts(ParseObject elevatorObject) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Ansprechpartner");
         query.fromLocalDatastore();
-        query.whereEqualTo("Kunde", customer);
+        query.whereEqualTo("Aufzug", elevatorObject);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
                 if (e == null) {

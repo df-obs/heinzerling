@@ -321,7 +321,6 @@ public class SignOrder extends AppCompatActivity {
             List<ParseObject> resultList = query.find();
             finalOrder = resultList.get(0);
             DateFormat dateFormat = DateFormat.getDateInstance();
-            DateFormat timeFormat = DateFormat.getDateTimeInstance();
 
             // Get and parse database contents
             valueOrderId = finalOrder.getInt("Nummer");
@@ -343,7 +342,7 @@ public class SignOrder extends AppCompatActivity {
             valueRemarks = finalOrder.getString("Bemerkungen");
             valueUpdated = new Date();
             valueWorkDone = finalOrder.getBoolean("Abgeschlossen");
-            valueStrUpdated = timeFormat.format(valueUpdated);
+            valueStrUpdated = dateFormat.format(valueUpdated);
 
             // Convert RTF
             PlainTextExtractor rtfExtractor = new PlainTextExtractor();
@@ -369,6 +368,7 @@ public class SignOrder extends AppCompatActivity {
 
         ArrayList<String> materialQuantity = getPositions(finalOrder, "Anzahl");
         ArrayList<String> materialUnit     = getPositions(finalOrder, "Einheit");
+        ArrayList<String> materialId       = getPositions(finalOrder, "Artikelnummer");
         ArrayList<String> materialName     = getPositions(finalOrder, "Name");
 
         ArrayList<String> mechanicQuantity = getMechanics(finalOrder, "Anzahl");
@@ -392,15 +392,16 @@ public class SignOrder extends AppCompatActivity {
         if (materialQuantity.size() > 0) {
             html.append("<br>");
             html.append("<table cellpadding=\"5\" cellspacing=\"0\" style=\"width: 100%;\" border=\"0\">");
-            html.append(String.format("<tr style=\"background-color: #cccccc; padding:5px;\"><td style=\"padding:5px; width:%s;\"><b>%s</b></td><td style=\"width:%s;\"><b>%s</b></td><td style=\"width:%s;\"><b>%s</b></td><td style=\"width:%s;\"><b>%s</b></td></tr>", "7%", getString(R.string.position_short), "10%", getString(R.string.quantity), "10%", getString(R.string.unit), "73%", getString(R.string.description)));
+            html.append(String.format("<tr style=\"background-color: #cccccc; padding:5px;\"><td style=\"padding:5px; width:%s;\"><b>%s</b></td><td style=\"width:%s;\"><b>%s</b></td><td style=\"width:%s;\"><b>%s</b></td><td style=\"width:%s;\"><b>%s</b></td><td style=\"width:%s;\"><b>%s</b></td></tr>", "7%", getString(R.string.position_short), "10%", getString(R.string.quantity), "10%", getString(R.string.unit), "10%", getString(R.string.number_short), "63%", getString(R.string.description)));
 
             for (int i = 0; i < materialQuantity.size(); i++) {
                 String col0 = String.valueOf(i+1);
                 String col1 = materialQuantity.get(i);
                 String col2 = materialUnit.get(i);
-                String col3 = materialName.get(i);
+                String col3 = materialId.get(i);
+                String col4 = materialName.get(i);
 
-                html.append(String.format("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>", col0, col1, col2, col3));
+                html.append(String.format("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>", col0, col1, col2, col3, col4));
             }
             html.append("</table>");
         }
@@ -493,6 +494,14 @@ public class SignOrder extends AppCompatActivity {
                         articleList.add(unit);
                         break;
 
+                    case "Artikelnummer":
+                        String articleId = String.valueOf(Objects.requireNonNull(materialPosition.getParseObject("Artikel")).getInt("Artikelnummer"));
+                        if (articleId == null || articleId.equals("") || articleId.equals(" ") || articleId.equals("null") || articleId.equals("0")) {
+                            articleId = "";
+                        }
+                        articleList.add(articleId);
+                        break;
+
                     case "Name":
                         String name = Objects.requireNonNull(materialPosition.getParseObject("Artikel")).getString("Name");
                         articleList.add(name);
@@ -514,6 +523,7 @@ public class SignOrder extends AppCompatActivity {
         ParseQuery<ParseObject> queryMechanics = ParseQuery.getQuery("MonteurAuftrag");
         queryMechanics.fromLocalDatastore();
         queryMechanics.whereEqualTo("Auftrag", order);
+        queryMechanics.whereGreaterThan("Stunden", 0);
         queryMechanics.include("Monteur");
         try {
             List<ParseObject> resultList = queryMechanics.find();

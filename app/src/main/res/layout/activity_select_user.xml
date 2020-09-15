@@ -46,6 +46,15 @@
                 android:onClick="setUser"/>
 
             <Button
+                android:id="@+id/select_user_button_manualsync"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#FFFFFF"
+                android:onClick="setManualSync"
+                android:text="@string/manualsync" />
+
+            <Button
                 android:id="@+id/select_user_button_back"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

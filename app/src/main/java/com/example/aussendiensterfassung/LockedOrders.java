@@ -62,14 +62,13 @@ public class LockedOrders extends AppCompatActivity {
                 if (e == null) {
                     if (resultList.size() > 0) {
                         ParseObject employee = resultList.get(0);
-                        final ParseObject userObject = employee;
                         String userSql = employee.getString("sqlRef");
 
                         // Get all locked (= signed) orders
                         ParseQuery<ParseObject> orderQuery = ParseQuery.getQuery("Einzelauftrag");
                         orderQuery.fromLocalDatastore();
                         orderQuery.whereEqualTo("Gesperrt", true);
-                        orderQuery.whereContains("Monteure", userSql);
+                        orderQuery.whereContains("Monteure", Objects.requireNonNull(userSql));
                         orderQuery.include("Gesamtauftrag");
                         orderQuery.include("Gesamtauftrag.Kunde");
                         orderQuery.orderByDescending("updatedAt");
@@ -145,7 +144,6 @@ public class LockedOrders extends AppCompatActivity {
                 if (e == null) {
                     ParseObject finalOrder = resultList.get(0);
                     DateFormat dateFormat = DateFormat.getDateInstance();
-                    DateFormat timeFormat = DateFormat.getDateTimeInstance();
 
                     // Get and parse database contents
                     int valueOrderId = finalOrder.getInt("Nummer");
@@ -170,7 +168,7 @@ public class LockedOrders extends AppCompatActivity {
                     String valueRemarks = finalOrder.getString("Bemerkungen");
                     Date valueUpdated = finalOrder.getUpdatedAt();
                     boolean valueShowTimestamp = finalOrder.getBoolean("Zeitstempel");
-                    String valueStrUpdated = timeFormat.format(valueUpdated);
+                    String valueStrUpdated = dateFormat.format(valueUpdated);
 
                     // Convert RTF
                     PlainTextExtractor rtfExtractor = new PlainTextExtractor();
@@ -340,6 +338,7 @@ public class LockedOrders extends AppCompatActivity {
         ParseQuery<ParseObject> queryMechanics = ParseQuery.getQuery("MonteurAuftrag");
         queryMechanics.fromLocalDatastore();
         queryMechanics.whereEqualTo("Auftrag", order);
+        queryMechanics.whereGreaterThan("Stunden", 0);
         queryMechanics.include("Monteur");
 
         queryMechanics.findInBackground(new FindCallback<ParseObject>() {

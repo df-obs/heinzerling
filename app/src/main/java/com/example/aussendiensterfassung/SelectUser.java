@@ -22,6 +22,7 @@ public class SelectUser extends AppCompatActivity {
 
     protected ArrayList<String> employeeNameList;
     protected ArrayList<String> employeeIdList;
+    protected ArrayList<String> employeeSqlList;
     protected String mUserId;
     protected String mUserName;
 
@@ -41,6 +42,7 @@ public class SelectUser extends AppCompatActivity {
         // Get a list of all employees (= users)
         employeeNameList = new ArrayList<>();
         employeeIdList = new ArrayList<>();
+        employeeSqlList = new ArrayList<>();
         ParseQuery<ParseObject> queryEmployeeList = ParseQuery.getQuery("Monteur");
         queryEmployeeList.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
@@ -61,6 +63,7 @@ public class SelectUser extends AppCompatActivity {
             ParseObject employee = resultList.get(i);
             employeeNameList.add(employee.getString("Name"));
             employeeIdList.add(employee.getObjectId());
+            employeeSqlList.add(employee.getString("sqlRef"));
 
             if (mUserId.equals(employee.getObjectId())) {
                 mUserName = employee.getString("Name");
@@ -82,10 +85,12 @@ public class SelectUser extends AppCompatActivity {
         AutoCompleteTextView fieldName = findViewById(R.id.select_user_input_name);
         String userName = fieldName.getText().toString();
         String userId = "";
+        String userSql = "";
 
         for (int i = 0; i < employeeIdList.size(); i++) {
             if (employeeNameList.get(i).equals(userName)) {
                 userId = employeeIdList.get(i);
+                userSql = employeeSqlList.get(i);
             }
         }
 
@@ -93,11 +98,18 @@ public class SelectUser extends AppCompatActivity {
             ed = pref.edit();
             ed.putString("USER", userId);
             ed.putString("USERNAME", userName);
+            ed.putString("USERSQL", userSql);
             ed.apply();
             Toast.makeText(getApplicationContext(), getString(R.string.saved), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.error_saving_wrong_employee), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void setManualSync(View v) {
+        ed = pref.edit();
+        ed.putInt("SYNC", 0);
+        ed.apply();
     }
 
     public void backToMain(View view) {

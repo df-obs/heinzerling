@@ -133,6 +133,23 @@ public class OrderCalendar extends AppCompatActivity {
                 DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
                 String strTime = timeFormat.format(date);
 
+                // Check Single Orders for high priority
+                boolean isHighPriority = false;
+
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("Einzelauftrag");
+                query.fromLocalDatastore();
+                query.whereEqualTo("Gesamtauftrag", order);
+                try {
+                    List <ParseObject> singleOrders = query.find();
+                    for (ParseObject singleOrder : singleOrders) {
+                        if (singleOrder.getString("Typ").equals("STÖRUNG")) {
+                            isHighPriority = true;
+                        }
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
                 // Create button
                 Button buttonOrder = new Button(this);
                 buttonOrder.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 2));
@@ -151,9 +168,11 @@ public class OrderCalendar extends AppCompatActivity {
                     }
                 });
 
-                if (counter % 2 == 0) {
+                if (isHighPriority)
+                    buttonOrder.setBackgroundColor(0xFFF44336);
+                else if (counter % 2 == 0)
                     buttonOrder.setBackgroundColor(0xFF80D8FF);
-                } else
+                else
                     buttonOrder.setBackgroundColor(0xFF82B1FF);
 
                 counter++;
