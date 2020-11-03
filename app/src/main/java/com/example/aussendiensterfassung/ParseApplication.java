@@ -46,7 +46,7 @@ public class ParseApplication extends Application {
         tables = new String[]{"Ansprechpartner", "Artikel", "ArtikelAuftrag", "Auftrag", "Aufzug", "Kunde", "Monteur", "MonteurAuftrag", "Einzelauftrag"};
 
         // Period of update timer
-        period = 60000;
+        period = 30000;
 
         // Fetch offline Data every period seconds
 

@@ -99,7 +99,9 @@ public class SelectUser extends AppCompatActivity {
             ed.putString("USER", userId);
             ed.putString("USERNAME", userName);
             ed.putString("USERSQL", userSql);
+            ed.putLong("LASTUPDATE", 0);
             ed.apply();
+
             Toast.makeText(getApplicationContext(), getString(R.string.saved), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.error_saving_wrong_employee), Toast.LENGTH_SHORT).show();
@@ -109,6 +111,7 @@ public class SelectUser extends AppCompatActivity {
     public void setManualSync(View v) {
         ed = pref.edit();
         ed.putInt("SYNC", 0);
+        ed.putLong("LASTUPDATE", 0);
         ed.apply();
     }
 

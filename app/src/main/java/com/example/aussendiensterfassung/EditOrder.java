@@ -165,16 +165,16 @@ public class EditOrder extends AppCompatActivity {
         ParseQuery<ParseObject> queryArticleList = ParseQuery.getQuery("Artikel");
         //queryArticleList.fromLocalDatastore();
         queryArticleList.whereEqualTo("Autofill", true);
-        queryArticleList.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> resultList, ParseException e) {
-                if (e == null) {
-                    for (int i = 0; i < resultList.size(); i++) {
-                        ParseObject article = resultList.get(i);
-                        articleList.add(article.getString("Name"));
-                    }
-                }
+        List<ParseObject> resultList = null;
+        try {
+            resultList = queryArticleList.find();
+            for (int i = 0; i < resultList.size(); i++) {
+                ParseObject article = resultList.get(i);
+                articleList.add(article.getString("Name"));
             }
-        });
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         // Find previous attached articles
         ParseQuery<ParseObject> queryOld = ParseQuery.getQuery("ArtikelAuftrag");
@@ -334,16 +334,16 @@ public class EditOrder extends AppCompatActivity {
 
         ParseQuery<ParseObject> queryEmployeeList = ParseQuery.getQuery("Monteur");
         //queryEmployeeList.fromLocalDatastore();
-        queryEmployeeList.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> resultList, ParseException e) {
-                if (e == null) {
-                    for (int i = 0; i < resultList.size(); i++) {
-                        ParseObject employee = resultList.get(i);
-                        employeeList.add(employee.getString("Name"));
-                    }
-                }
+        List<ParseObject> resultList = null;
+        try {
+            resultList = queryEmployeeList.find();
+            for (int i = 0; i < resultList.size(); i++) {
+                ParseObject employee = resultList.get(i);
+                employeeList.add(employee.getString("Name"));
             }
-        });
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         // Find previous attached persons
         ParseQuery<ParseObject> queryOld = ParseQuery.getQuery("MonteurAuftrag");
