@@ -99,7 +99,7 @@ public class EditOrder extends AppCompatActivity {
         orderObjectId = intent.getStringExtra("orderObjectId");
 
         ParseQuery<ParseObject> queryOrder = ParseQuery.getQuery("Einzelauftrag");
-        queryOrder.fromLocalDatastore();
+        //queryOrder.fromLocalDatastore();
         queryOrder.whereEqualTo("objectId", orderObjectId);
         queryOrder.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
@@ -163,7 +163,7 @@ public class EditOrder extends AppCompatActivity {
         final ArrayList<String> articleList = new ArrayList<>();
 
         ParseQuery<ParseObject> queryArticleList = ParseQuery.getQuery("Artikel");
-        queryArticleList.fromLocalDatastore();
+        //queryArticleList.fromLocalDatastore();
         queryArticleList.whereEqualTo("Autofill", true);
         queryArticleList.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
@@ -178,7 +178,7 @@ public class EditOrder extends AppCompatActivity {
 
         // Find previous attached articles
         ParseQuery<ParseObject> queryOld = ParseQuery.getQuery("ArtikelAuftrag");
-        queryOld.fromLocalDatastore();
+        //queryOld.fromLocalDatastore();
         queryOld.whereEqualTo("Auftrag", order);
         queryOld.whereEqualTo("Vorgegeben", false);
         queryOld.include("Artikel");
@@ -228,7 +228,7 @@ public class EditOrder extends AppCompatActivity {
     protected void saveMaterial() {
         // Find and delete existing positions
         ParseQuery<ParseObject> queryOld = ParseQuery.getQuery("ArtikelAuftrag");
-        queryOld.fromLocalDatastore();
+        //queryOld.fromLocalDatastore();
         queryOld.whereEqualTo("Auftrag", order);
         queryOld.whereEqualTo("Vorgegeben", false);
         queryOld.findInBackground(new FindCallback<ParseObject>() {
@@ -280,7 +280,7 @@ public class EditOrder extends AppCompatActivity {
 
                 // Check if article exists
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("Artikel");
-                query.fromLocalDatastore();
+                //query.fromLocalDatastore();
                 query.whereEqualTo("Name", valueArticle);
                 query.findInBackground(new FindCallback<ParseObject>() {
                     public void done(List<ParseObject> resultList, ParseException e) {
@@ -295,7 +295,7 @@ public class EditOrder extends AppCompatActivity {
 
                             // Attach article to order
                             ParseQuery<ParseObject> queryArticle = ParseQuery.getQuery("Artikel");
-                            queryArticle.fromLocalDatastore();
+                            //queryArticle.fromLocalDatastore();
                             queryArticle.whereEqualTo("Name", valueArticle);
                             queryArticle.findInBackground(new FindCallback<ParseObject>() {
                                 public void done(List<ParseObject> resultList, ParseException e) {
@@ -333,7 +333,7 @@ public class EditOrder extends AppCompatActivity {
         final ArrayList<String> employeeList = new ArrayList<>();
 
         ParseQuery<ParseObject> queryEmployeeList = ParseQuery.getQuery("Monteur");
-        queryEmployeeList.fromLocalDatastore();
+        //queryEmployeeList.fromLocalDatastore();
         queryEmployeeList.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
                 if (e == null) {
@@ -347,7 +347,7 @@ public class EditOrder extends AppCompatActivity {
 
         // Find previous attached persons
         ParseQuery<ParseObject> queryOld = ParseQuery.getQuery("MonteurAuftrag");
-        queryOld.fromLocalDatastore();
+        //queryOld.fromLocalDatastore();
         queryOld.whereEqualTo("Auftrag", order);
         queryOld.whereNotEqualTo("Vorgegeben", true);
         queryOld.include("Monteur");
@@ -404,7 +404,7 @@ public class EditOrder extends AppCompatActivity {
     protected void saveMechanics() {
         // Find and delete existing positions
         ParseQuery<ParseObject> queryOld = ParseQuery.getQuery("MonteurAuftrag");
-        queryOld.fromLocalDatastore();
+        //queryOld.fromLocalDatastore();
         queryOld.whereEqualTo("Auftrag", order);
         queryOld.whereNotEqualTo("Vorgegeben", true);
         queryOld.findInBackground(new FindCallback<ParseObject>() {
@@ -462,7 +462,7 @@ public class EditOrder extends AppCompatActivity {
 
                 // Attach mechanic to order
                 ParseQuery<ParseObject> queryMechanic = ParseQuery.getQuery("Monteur");
-                queryMechanic.fromLocalDatastore();
+                //queryMechanic.fromLocalDatastore();
                 queryMechanic.whereEqualTo("Name", valueName);
                 queryMechanic.findInBackground(new FindCallback<ParseObject>() {
                     public void done(List<ParseObject> resultList, ParseException e) {
@@ -495,7 +495,7 @@ public class EditOrder extends AppCompatActivity {
     protected void getServices() {
         // Find previous attached persons
         ParseQuery<ParseObject> queryOld = ParseQuery.getQuery("Einzelauftrag");
-        queryOld.fromLocalDatastore();
+        //queryOld.fromLocalDatastore();
         queryOld.whereEqualTo("objectId", orderObjectId);
         queryOld.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
@@ -552,7 +552,7 @@ public class EditOrder extends AppCompatActivity {
 
         // Save user inputs to database
         ParseQuery<ParseObject> queryOrder = ParseQuery.getQuery("Einzelauftrag");
-        queryOrder.fromLocalDatastore();
+        //queryOrder.fromLocalDatastore();
         queryOrder.whereEqualTo("objectId", orderObjectId);
         queryOrder.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
@@ -583,7 +583,7 @@ public class EditOrder extends AppCompatActivity {
 
         // Get material
         ParseQuery<ParseObject> queryMaterial = ParseQuery.getQuery("ArtikelAuftrag");
-        queryMaterial.fromLocalDatastore();
+        //queryMaterial.fromLocalDatastore();
         queryMaterial.whereEqualTo("Auftrag", order);
         queryMaterial.include("Artikel");
 
@@ -654,7 +654,7 @@ public class EditOrder extends AppCompatActivity {
 
         // Get mechanics
         ParseQuery<ParseObject> queryMechanics = ParseQuery.getQuery("MonteurAuftrag");
-        queryMechanics.fromLocalDatastore();
+        //queryMechanics.fromLocalDatastore();
         queryMechanics.whereEqualTo("Auftrag", order);
         queryMechanics.whereGreaterThan("Stunden", 0);
         queryMechanics.include("Monteur");
@@ -716,7 +716,7 @@ public class EditOrder extends AppCompatActivity {
     // Show the final order overview
     protected void getOverview() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Einzelauftrag");
-        query.fromLocalDatastore();
+        //query.fromLocalDatastore();
         query.whereEqualTo("objectId", orderObjectId);
         query.include("Aufzug");
         query.include("Aufzug.Kunde");

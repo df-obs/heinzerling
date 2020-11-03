@@ -46,9 +46,11 @@ public class ParseApplication extends Application {
         tables = new String[]{"Ansprechpartner", "Artikel", "ArtikelAuftrag", "Auftrag", "Aufzug", "Kunde", "Monteur", "MonteurAuftrag", "Einzelauftrag"};
 
         // Period of update timer
-        period = 10000;
+        period = 60000;
 
         // Fetch offline Data every period seconds
+
+        /* disabled temporarily because of performance issues
         final Timer timer = new Timer();
         final TimerTask fetchOfflineData = new TimerTask() {
             @Override
@@ -85,6 +87,16 @@ public class ParseApplication extends Application {
             }
         };
         timer.schedule(fetchOfflineData,0, period);
+        */
+
+        final Timer timer = new Timer();
+        final TimerTask showNotifications = new TimerTask() {
+            @Override
+            public void run() {
+                checkForNewOrders();
+            }
+        };
+        timer.schedule(showNotifications,0, period);
     }
 
     public void pinData(final int sequence, final boolean fullSync) {
@@ -121,6 +133,29 @@ public class ParseApplication extends Application {
                 pinData(sequence+1, fullSync);
             }
         }).start();
+    }
+
+    public void checkForNewOrders() {
+        String userSql = pref.getString("USERSQL", "NOT_FOUND");
+        Long lastUpdateMs = pref.getLong("LASTUPDATE", 0);
+        Date lastUpdate = new Date(lastUpdateMs);
+        Date currentUpdate = new Date();
+
+        ed = pref.edit();
+        ed.putLong("LASTUPDATE", currentUpdate.getTime());
+        ed.apply();
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Einzelauftrag");
+        query.whereContains("Monteure", Objects.requireNonNull(userSql));
+        query.whereNotEqualTo("Gesperrt", true);
+        query.whereGreaterThan("updatedAt", lastUpdate);
+
+        try {
+            List<ParseObject> resultList = query.find();
+            showNotification(resultList, lastUpdate, false);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public void showNotification(List<ParseObject> resultList, Date lastUpdate, boolean fullSync) {

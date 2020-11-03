@@ -33,15 +33,15 @@ public class OrderDetails extends AppCompatActivity {
         String orderObjectId = intent.getStringExtra("orderObjectId");
 
         ParseQuery<ParseObject> innerQuery = ParseQuery.getQuery("Auftrag");
-        innerQuery.fromLocalDatastore();
+        //innerQuery.fromLocalDatastore();
         innerQuery.whereEqualTo("objectId", orderObjectId);
         ParseQuery<ParseObject> elevatorQuery = ParseQuery.getQuery("Einzelauftrag");
-        elevatorQuery.fromLocalDatastore();
+        //elevatorQuery.fromLocalDatastore();
         elevatorQuery.whereMatchesQuery("Gesamtauftrag", innerQuery);
         elevatorQuery.include("Aufzug");
 
         ParseQuery<ParseObject> orderQuery = ParseQuery.getQuery("Auftrag");
-        orderQuery.fromLocalDatastore();
+        //orderQuery.fromLocalDatastore();
         orderQuery.whereEqualTo("objectId", orderObjectId);
         orderQuery.include("Kunde");
 

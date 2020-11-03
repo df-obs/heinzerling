@@ -91,10 +91,10 @@ public class SingleOrder extends AppCompatActivity {
     // Get all pre-set articles from the order
     protected void getArticles() {
         ParseQuery<ParseObject> innerQuery = ParseQuery.getQuery("Einzelauftrag");
-        innerQuery.fromLocalDatastore();
+        //innerQuery.fromLocalDatastore();
         innerQuery.whereEqualTo("objectId", orderObjectId);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ArtikelAuftrag");
-        query.fromLocalDatastore();
+        //query.fromLocalDatastore();
         query.whereMatchesQuery("Auftrag", innerQuery);
         query.whereEqualTo("Vorgegeben", true);
         query.include("Artikel");
@@ -167,7 +167,7 @@ public class SingleOrder extends AppCompatActivity {
 
     protected void getOrder() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Einzelauftrag");
-        query.fromLocalDatastore();
+        //query.fromLocalDatastore();
         query.whereEqualTo("objectId", orderObjectId);
         query.include("Aufzug");
         query.include("Aufzug.Kunde");
@@ -278,7 +278,7 @@ public class SingleOrder extends AppCompatActivity {
     // Get contact persons for the customer who owns the elevator
     protected void getContacts(ParseObject elevatorObject) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Ansprechpartner");
-        query.fromLocalDatastore();
+        //query.fromLocalDatastore();
         query.whereEqualTo("Aufzug", elevatorObject);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {

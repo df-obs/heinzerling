@@ -56,7 +56,7 @@ public class LockedOrders extends AppCompatActivity {
         final String userId = pref.getString("USER", "NOT_FOUND");
         ParseQuery<ParseObject> queryEmployeeList = ParseQuery.getQuery("Monteur");
         queryEmployeeList.whereEqualTo("objectId", userId);
-        queryEmployeeList.fromLocalDatastore();
+        //queryEmployeeList.fromLocalDatastore();
         queryEmployeeList.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
                 if (e == null) {
@@ -66,7 +66,7 @@ public class LockedOrders extends AppCompatActivity {
 
                         // Get all locked (= signed) orders
                         ParseQuery<ParseObject> orderQuery = ParseQuery.getQuery("Einzelauftrag");
-                        orderQuery.fromLocalDatastore();
+                        //orderQuery.fromLocalDatastore();
                         orderQuery.whereEqualTo("Gesperrt", true);
                         orderQuery.whereContains("Monteure", Objects.requireNonNull(userSql));
                         orderQuery.include("Gesamtauftrag");
@@ -134,7 +134,7 @@ public class LockedOrders extends AppCompatActivity {
         
         // Get order
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Einzelauftrag");
-        query.fromLocalDatastore();
+        //query.fromLocalDatastore();
         query.whereEqualTo("objectId", orderObjectId);
         query.include("Aufzug");
         query.include("Aufzug.Kunde");
@@ -265,7 +265,7 @@ public class LockedOrders extends AppCompatActivity {
 
         // Get material
         ParseQuery<ParseObject> queryMaterial = ParseQuery.getQuery("ArtikelAuftrag");
-        queryMaterial.fromLocalDatastore();
+        //queryMaterial.fromLocalDatastore();
         queryMaterial.whereEqualTo("Auftrag", order);
         queryMaterial.include("Artikel");
 
@@ -336,7 +336,7 @@ public class LockedOrders extends AppCompatActivity {
 
         // Get mechanics
         ParseQuery<ParseObject> queryMechanics = ParseQuery.getQuery("MonteurAuftrag");
-        queryMechanics.fromLocalDatastore();
+        //queryMechanics.fromLocalDatastore();
         queryMechanics.whereEqualTo("Auftrag", order);
         queryMechanics.whereGreaterThan("Stunden", 0);
         queryMechanics.include("Monteur");

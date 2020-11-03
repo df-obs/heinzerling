@@ -68,7 +68,7 @@ public class OrderCalendar extends AppCompatActivity {
         String userId = pref.getString("USER", "NOT_FOUND");
         ParseQuery<ParseObject> queryEmployeeList = ParseQuery.getQuery("Monteur");
         queryEmployeeList.whereEqualTo("objectId", userId);
-        queryEmployeeList.fromLocalDatastore();
+        //queryEmployeeList.fromLocalDatastore();
         queryEmployeeList.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> resultList, ParseException e) {
                 if (e == null) {
@@ -79,7 +79,7 @@ public class OrderCalendar extends AppCompatActivity {
 
                         // Get filtered and sorted orders
                         ParseQuery<ParseObject> query = ParseQuery.getQuery("Auftrag");
-                        query.fromLocalDatastore();
+                        //query.fromLocalDatastore();
                         query.include("Kunde");
                         query.whereContains("Monteure", userSql);
                         query.whereGreaterThanOrEqualTo("DatumMitUhrzeit", today);
@@ -137,7 +137,7 @@ public class OrderCalendar extends AppCompatActivity {
                 boolean isHighPriority = false;
 
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("Einzelauftrag");
-                query.fromLocalDatastore();
+                //query.fromLocalDatastore();
                 query.whereEqualTo("Gesamtauftrag", order);
                 try {
                     List <ParseObject> singleOrders = query.find();
